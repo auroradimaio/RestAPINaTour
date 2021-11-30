@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">NaTour21</string>
+    <string name="app_name">NaTour21Personal</string>
+    <string name="title">NaTour21</string>
+    <string name="email_input_field_hint">Email</string>
+    <string name="password_input_field_hint">Password</string>
+    <string name="username_hint">Nome utente</string>
+    <string name="conferma_password_hint">Conferma password</string>
+    <string name="rememberMeText">Ricordami</string>
+    <string name="password_dimenticata_text">Password dimenticata?</string>
+    <string name="accedi_con_google">ACCEDI CON GOOGLE</string>
+    <string name="accedi_con_facebook">ACCEDI CON FACEBOOK</string>
+    <string name="accedi">ACCEDI</string>
+    <string name="registrati">REGISTRATI</string>
+
 </resources>
