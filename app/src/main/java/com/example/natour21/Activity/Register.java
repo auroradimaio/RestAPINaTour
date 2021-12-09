@@ -19,7 +19,8 @@ public class Register extends AppCompatActivity {
 
         Button btnRegister = findViewById(R.id.btnRegister);
 
-        EditText username = findViewById(R.id.et_username);
+        EditText firstName = findViewById(R.id.et_firstName);
+        EditText lastName = findViewById(R.id.et_lastName);
         EditText email = findViewById(R.id.et_email);
         EditText password = findViewById(R.id.et_password);
         EditText confirmPassword = findViewById(R.id.et_ConfirmPassword);
@@ -27,7 +28,7 @@ public class Register extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                authenticationController.register(Register.this,username.getText().toString(),email.getText().toString(),password.getText().toString(),confirmPassword.getText().toString(), "NaTour21");
+                authenticationController.register(Register.this,firstName.getText().toString(),lastName.getText().toString(),email.getText().toString(),password.getText().toString(),confirmPassword.getText().toString(), "NaTour21");
             }
         });
     }

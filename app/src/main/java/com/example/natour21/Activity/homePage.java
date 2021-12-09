@@ -22,15 +22,19 @@ public class homePage extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                authenticationController.logout(homePage.this);
+                authenticationController.logout(homePage.this, authenticationController.auth);
             }
         });
 
         TextView accesstoken = findViewById(R.id.accessToken);
         TextView refreshtoken = findViewById(R.id.refreshToken);
+        TextView email = findViewById(R.id.email);
+        TextView auth = findViewById(R.id.auth);
 
         accesstoken.setText("AccessToken: " + authenticationController.accessToken);
         refreshtoken.setText("RefreshToken: " + authenticationController.refreshToken);
+        email.setText("Email: " + authenticationController.userEmail);
+        auth.setText("Auth: " + authenticationController.auth);
 
     }
 }

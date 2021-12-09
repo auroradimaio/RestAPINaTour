@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Activity.Login">
 
-
             <EditText
                 android:id="@+id/et_email"
                 android:layout_width="0dp"
@@ -17,7 +16,7 @@
                 android:autofillHints="none"
                 android:background="@drawable/edit_text"
                 android:gravity="center_horizontal|center_vertical"
-                android:hint="@string/email_input_field_hint"
+                android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
                 android:padding="15dp"
                 android:textColor="#000000"
@@ -37,7 +36,7 @@
                 android:autofillHints="none"
                 android:background="@drawable/edit_text"
                 android:gravity="center_horizontal|center_vertical"
-                android:hint="@string/password_input_field_hint"
+                android:hint="@string/hint_passowrd"
                 android:inputType="textPassword"
                 android:padding="15dp"
                 android:textColor="#000000"
@@ -66,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:text="@string/rememberMeText"
+                android:text="@string/rememberMe"
                 android:textColor="@color/green"
                 android:textColorLink="@color/green"
                 android:textSize="17sp"
@@ -78,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
-                android:text="@string/password_dimenticata_text"
+                android:text="@string/forgotPassword"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/green"
                 android:textSize="17sp"
@@ -93,7 +92,7 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="24dp"
                 android:background="@drawable/btn_access_with_google"
-                android:text="@string/accedi_con_google"
+                android:text="@string/logWithGoogle"
                 android:textColor="@color/white"
                 app:backgroundTint="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -102,49 +101,45 @@
                 tools:ignore="TextContrastCheck" />
 
 
-            <Button
-                android:id="@+id/btnLoginWithFacebook"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/btn_access_with_facebook"
-                android:text="@string/accedi_con_facebook"
-                app:backgroundTint="@null"
-                app:layout_constraintBottom_toTopOf="@+id/btnLoginWithGoogle"
-                app:layout_constraintEnd_toEndOf="@+id/btnRegister"
-                app:layout_constraintStart_toStartOf="@+id/btnLogin" />
+    <Button
+        android:id="@+id/btnLoginWithFacebook"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_access_with_facebook"
+        android:text="@string/logWithFacebook"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@+id/btnLoginWithGoogle"
+        app:layout_constraintEnd_toEndOf="@+id/btnRegister"
+        app:layout_constraintStart_toStartOf="@+id/btnLogin" />
 
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="72dp"
-                android:layout_marginBottom="72dp"
-                android:background="@drawable/btn_access"
-                android:text="@string/accedi"
-                android:textColor="@color/white"
-                app:backgroundTint="@null"
-                app:layout_constraintBottom_toTopOf="@+id/btnLoginWithGoogle"
-                app:layout_constraintStart_toStartOf="@+id/rememberMe"
-                app:layout_constraintTop_toBottomOf="@+id/rememberMe"
-                tools:ignore="TextContrastCheck" />
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_access"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@+id/btnLoginWithFacebook"
+        app:layout_constraintStart_toStartOf="@+id/rememberMe"
+        tools:ignore="TextContrastCheck" />
 
-            <Button
-                android:id="@+id/btnRegister"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="72dp"
-                android:layout_marginBottom="72dp"
-                android:background="@drawable/btn_access"
-                android:text="@string/registrati"
-                android:textColor="@color/white"
-                app:backgroundTint="@null"
-                app:layout_constraintBottom_toTopOf="@+id/btnLoginWithGoogle"
-                app:layout_constraintEnd_toEndOf="@+id/et_password"
-                app:layout_constraintTop_toBottomOf="@+id/rememberMe"
-                tools:ignore="TextContrastCheck" />
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_access"
+        android:text="@string/register"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@+id/btnLoginWithFacebook"
+        app:layout_constraintEnd_toEndOf="@+id/et_password"
+        tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
