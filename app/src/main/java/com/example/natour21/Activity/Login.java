@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -21,6 +25,12 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,23 +40,18 @@ import java.util.Arrays;
 
 public class Login extends AppCompatActivity {
 
-    CallbackManager callbackManager;
+    //Facebook
+    CallbackManager callbackFacebook;
+    //Google
+    GoogleSignInClient googleSignInClient;
+
+    ActivityResultLauncher<Intent> mLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-        callbackManager = CallbackManager.Factory.create();
-
-
-        EditText email = findViewById(R.id.et_email);
-        EditText password = findViewById(R.id.et_password);
-        Button btnLoginwithFacebook = findViewById(R.id.btnLoginWithFacebook);
-        Button btnLogin = findViewById(R.id.btnLogin);
-        Button btnRegister = findViewById(R.id.btnRegister);
-        CheckBox rememberMe = findViewById(R.id.rememberMe);
 
         SharedPreferences sharedPreferences = getSharedPreferences("rememberMe", Context.MODE_PRIVATE);
 
@@ -57,6 +62,39 @@ public class Login extends AppCompatActivity {
             String auth = sharedPreferences.getString("auth", "");
             authenticationController.login(Login.this, accessToken, refreshToken, userEmail, auth);
         }
+
+
+        //Facebook init
+        callbackFacebook = CallbackManager.Factory.create();
+
+        //Google init
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("284354529342-6j420h8tdg4m860gq6a6es4iactng2j7.apps.googleusercontent.com")
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        mLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        googleSignInClient.signOut();
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                        LoginWithGoogle(task);
+                    }
+                });
+
+
+        EditText email = findViewById(R.id.et_email);
+        EditText password = findViewById(R.id.et_password);
+        Button btnLoginWithFacebook = findViewById(R.id.btnLoginWithFacebook);
+        Button btnLoginWithGoogle = findViewById(R.id.btnLoginWithGoogle);
+        Button btnLogin = findViewById(R.id.btnLogin);
+        Button btnRegister = findViewById(R.id.btnRegister);
+        CheckBox rememberMe = findViewById(R.id.rememberMe);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,26 +111,33 @@ public class Login extends AppCompatActivity {
         });
 
         // Callback registration
-        btnLoginwithFacebook.setOnClickListener(new View.OnClickListener() {
+        btnLoginWithFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LogWithFacebook();
+                LoginWithFacebook();
             }
         });
 
+        btnLoginWithGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = googleSignInClient.getSignInIntent();
+                mLauncher.launch(signInIntent);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        callbackFacebook.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void LogWithFacebook() {
+    private void LoginWithFacebook() {
 
-        callbackManager = CallbackManager.Factory.create();
+        callbackFacebook = CallbackManager.Factory.create();
 
-        LoginManager.getInstance().registerCallback(callbackManager,
+        LoginManager.getInstance().registerCallback(callbackFacebook,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
@@ -127,10 +172,22 @@ public class Login extends AppCompatActivity {
 
                     @Override
                     public void onError(FacebookException exception) {
+                        authenticationController.showMessageDialog(Login.this, "Errore durante l'autenticazione", null);
                     }
                 });
 
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
+    }
+
+    private void LoginWithGoogle(Task<GoogleSignInAccount> task) {
+
+        try {
+            GoogleSignInAccount account = task.getResult(ApiException.class);
+
+            authenticationController.loginWithGoogle(Login.this,account.getEmail(),account.getGivenName(),account.getFamilyName());
+        } catch (ApiException e) {
+
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.natour21.Controller;
 
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,18 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.facebook.login.LoginManager;
 import com.example.natour21.API.User.UserAPI;
 import com.example.natour21.Activity.Login;
 import com.example.natour21.Activity.homePage;
 import com.example.natour21.Enumeration.Auth;
 import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
-import com.facebook.login.LoginManager;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -184,6 +182,72 @@ public class authenticationController {
         });
     }
 
+    public static void loginWithGoogle(AppCompatActivity activity, String email, String firstName, String lastName)
+    {
+        UserAPI.loginGoogle(activity,email,firstName,lastName, new VolleyCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getString("status").equals("OK"))
+                    {
+                        ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Accesso in corso...");
+                        progressDialog.show();
+                        progressDialog.setCancelable(false);
+                        UserAPI.login(activity, email, email + firstName + lastName + "GOOGLE_AUTH", new VolleyCallback() {
+                            @Override
+                            public void onSuccess(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    if (jsonObject.getString("status").equals("OK")) {
+                                        accessToken = jsonObject.getJSONObject("result").getString("accessToken");
+                                        refreshToken = jsonObject.getJSONObject("result").getString("refreshToken");
+                                        userEmail = jsonObject.getJSONObject("result").getString("email");
+                                        auth = Auth.GOOGLE.toString();
+                                        SharedPreferences sharedPreferences = activity.getSharedPreferences("rememberMe", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("remember", "true");
+                                        editor.putString("email", userEmail);
+                                        editor.putString("accessToken", accessToken);
+                                        editor.putString("refreshToken", refreshToken);
+                                        editor.putString("auth", auth);
+                                        editor.apply();
+                                        progressDialog.dismiss();
+                                        activity.startActivity(new Intent(activity, homePage.class));
+                                    } else if (jsonObject.getString("status").equals("FAILED")) {
+                                        progressDialog.dismiss();
+                                        showMessageDialog(activity, jsonObject.getString("result"), null);
+                                    }
+                                } catch (JSONException jsonException) {
+                                    progressDialog.dismiss();
+                                    showMessageDialog(activity, "Errore nel recupero delle informazioni", null);
+                                }
+                            }
+
+                            @Override
+                            public void onError(String response) {
+                                showMessageDialog(activity, "Errore nel recupero delle informazioni", null);
+                            }
+                        });
+                    }
+                    else if(jsonObject.getString("status").equals("FAILED"))
+                    {
+                        showMessageDialog(activity, jsonObject.getString("result"), null);
+                    }
+                } catch (JSONException jsonException) {
+                    showMessageDialog(activity, "Errore nel recupero delle informazioni", null);
+                }
+            }
+
+            @Override
+            public void onError(String response) {
+                showMessageDialog(activity, "Errore nel recupero delle informazioni, riprovare più tardi", null);
+            }
+        });
+    }
+
+
     public static void register(AppCompatActivity activity, String firstName, String lastName, String email, String password, String confirmPassword, String auth) {
         if(isNetworkConnected(activity.getApplication().getApplicationContext())) {
             if(firstName.length() > 0 && lastName.length() > 0 && email.length() > 0 && password.length() > 0 && confirmPassword.length() > 0) {
@@ -275,9 +339,9 @@ public class authenticationController {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    protected static void showMessageDialog(AppCompatActivity activity, String message, View.OnClickListener clickListener) {
+    public static void showMessageDialog(AppCompatActivity activity, String message, View.OnClickListener clickListener) {
 
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         ViewGroup viewGroup = activity.findViewById(android.R.id.content);
         View dialogView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.customdialog, viewGroup, false);
 
