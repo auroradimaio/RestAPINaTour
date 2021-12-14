@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class UserAPI {
 
     public static void login(AppCompatActivity activity, String email, String password, VolleyCallback volleyCallback) {
@@ -128,7 +129,6 @@ public class UserAPI {
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
     }
 
-
     public static void register(AppCompatActivity activity, String firstName, String lastName, String email, String password, String auth, VolleyCallback volleyCallback) {
 
         String url = Config.BASE_URL + Config.USER_API + Config.REGISTER;
@@ -193,6 +193,32 @@ public class UserAPI {
                 HashMap<String, String> param = new HashMap<>();
                 param.put("email", email);
                 return param;
+            }
+        };
+
+        VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+    }
+
+    public static void refreshToken(Activity activity, String refreshToken, VolleyCallback volleyCallback) {
+
+        String url = Config.BASE_URL + Config.USER_API + Config.REFRESH_TOKEN;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                volleyCallback.onSuccess(response);
+            }}, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                volleyCallback.onError(error.getMessage());
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + refreshToken);
+                return params;
             }
         };
 

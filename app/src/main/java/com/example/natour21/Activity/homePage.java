@@ -22,7 +22,7 @@ public class homePage extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                authenticationController.logout(homePage.this, authenticationController.auth);
+                authenticationController.logout(homePage.this, authenticationController.auth, false);
             }
         });
 

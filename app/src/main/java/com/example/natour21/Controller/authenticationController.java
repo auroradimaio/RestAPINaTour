@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,15 @@ import com.example.natour21.Activity.homePage;
 import com.example.natour21.Enumeration.Auth;
 import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
 
 public class authenticationController {
 
@@ -29,6 +37,103 @@ public class authenticationController {
     public static String refreshToken;
     public static String userEmail;
     public static String auth;
+
+    public static void checkLogin(AppCompatActivity activity)
+    {
+        SharedPreferences sharedPreferences = activity.getSharedPreferences("rememberMe", Context.MODE_PRIVATE);
+
+        if(sharedPreferences.getString("remember","").equals("true")) {
+
+            accessToken = sharedPreferences.getString("accessToken", "");
+            refreshToken = sharedPreferences.getString("refreshToken", "");
+            userEmail = sharedPreferences.getString("email", "");
+            auth = sharedPreferences.getString("auth", "");
+
+            if(isAccessTokenExpired(accessToken))
+            {
+                refreshTokens(activity, refreshToken);
+            }
+            else
+            {
+                activity.startActivity(new Intent(activity, homePage.class));
+            }
+        }
+
+    }
+
+    private static void refreshTokens(AppCompatActivity activity, String refreshToken_)
+    {
+        ProgressDialog progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage("Accesso in corso...");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+
+        UserAPI.refreshToken(activity, refreshToken_, new VolleyCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("status").equals("OK")) {
+                        accessToken = jsonObject.getJSONObject("result").getString("accessToken");
+                        refreshToken = jsonObject.getJSONObject("result").getString("refreshToken");
+                        userEmail = jsonObject.getJSONObject("result").getString("email");
+
+                        SharedPreferences sharedPreferences = activity.getSharedPreferences("rememberMe", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("remember", "true");
+                        editor.putString("email", userEmail);
+                        editor.putString("accessToken", accessToken);
+                        editor.putString("refreshToken", refreshToken);
+                        editor.putString("auth", auth);
+                        editor.apply();
+
+                        activity.startActivity(new Intent(activity, homePage.class));
+                        progressDialog.dismiss();
+                    }else if(jsonObject.getString("status").equals("FAILED"))
+                    {
+                        progressDialog.dismiss();
+                        logout(activity, auth, true);
+                    }
+                } catch (JSONException jsonException) {
+                    progressDialog.dismiss();
+                    logout(activity, auth, true);
+                }
+            }
+
+            @Override
+            public void onError(String response) {
+                progressDialog.dismiss();
+                logout(activity,auth, true);
+            }
+        });
+    }
+
+    private static Boolean isAccessTokenExpired(String accessToken){
+
+        String[] accessTokenPart = accessToken.split("\\.");
+        String payload = accessTokenPart[1];
+
+        try {
+
+            byte[] decodedPayload = Base64.decode(payload, Base64.DEFAULT);
+            payload = new String(decodedPayload,"UTF-8");
+        } catch(UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONObject obj = new JSONObject(payload);
+            long expireDate = obj.getLong("exp");
+            Timestamp timestampExpireDate = new Timestamp(expireDate * 1000);
+            long time = System.currentTimeMillis();
+            Timestamp timestamp = new Timestamp(time);
+            return timestamp.after(timestampExpireDate);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
 
     public static void login(AppCompatActivity activity, String email, String password, boolean rememberMe)
     {
@@ -184,6 +289,8 @@ public class authenticationController {
 
     public static void loginWithGoogle(AppCompatActivity activity, String email, String firstName, String lastName)
     {
+
+        System.out.println("HERE22222222222222222");
         UserAPI.loginGoogle(activity,email,firstName,lastName, new VolleyCallback() {
             @Override
             public void onSuccess(String response) {
@@ -246,7 +353,6 @@ public class authenticationController {
             }
         });
     }
-
 
     public static void register(AppCompatActivity activity, String firstName, String lastName, String email, String password, String confirmPassword, String auth) {
         if(isNetworkConnected(activity.getApplication().getApplicationContext())) {
@@ -321,17 +427,33 @@ public class authenticationController {
         }
     }
 
-    public static void logout(AppCompatActivity activity, String auth_)
+    public static void logout(AppCompatActivity activity, String auth_, boolean isTokenExpired)
     {
         SharedPreferences sharedPreferences = activity.getSharedPreferences("rememberMe", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        activity.startActivity(new Intent(activity, Login.class));
 
-        if(auth_.equals(Auth.FACEBOOK.toString()))
+        if(!isTokenExpired)
         {
-            LoginManager.getInstance().logOut();
+            activity.startActivity(new Intent(activity, Login.class));
+            if(auth_.equals(Auth.FACEBOOK.toString()))
+            {
+                LoginManager.getInstance().logOut();
+            }else if(auth_.equals(Auth.GOOGLE.toString()))
+            {
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken("284354529342-6j420h8tdg4m860gq6a6es4iactng2j7.apps.googleusercontent.com")
+                        .requestEmail()
+                        .build();
+
+                // Build a GoogleSignInClient with the options specified by gso.
+                GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(activity, gso);
+                googleSignInClient.signOut();
+            }
+        }else
+        {
+            showMessageDialog(activity, "Sessione scaduta, effettuare l'accesso", null);
         }
     }
 
@@ -372,11 +494,5 @@ public class authenticationController {
         return cm.getActiveNetworkInfo() != null;
     }
 
-    public static void login(AppCompatActivity activity, String accessToken_, String refreshToken_, String userEmail_, String auth_) {
-        accessToken = accessToken_;
-        refreshToken = refreshToken_;
-        userEmail = userEmail_;
-        auth = auth_;
-        activity.startActivity(new Intent(activity, homePage.class));
-    }
 }
+

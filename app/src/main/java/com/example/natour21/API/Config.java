@@ -9,4 +9,5 @@ public class Config {
     public static final String CHECK_AUTH_NATOUR21 = "/user/auth";
     public static final String LOGIN_FACEBOOK = "/user/facebook/login";
     public static final String LOGIN_GOOGLE = "/user/google/login";
+    public static final String REFRESH_TOKEN = "/token/refresh";
 }

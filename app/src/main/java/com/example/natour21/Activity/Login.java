@@ -53,23 +53,14 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.login);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("rememberMe", Context.MODE_PRIVATE);
-
-        if(sharedPreferences.getString("remember","").equals("true")) {
-            String accessToken = sharedPreferences.getString("accessToken", "");
-            String refreshToken = sharedPreferences.getString("refreshToken", "");
-            String userEmail = sharedPreferences.getString("email", "");
-            String auth = sharedPreferences.getString("auth", "");
-            authenticationController.login(Login.this, accessToken, refreshToken, userEmail, auth);
-        }
-
+        authenticationController.checkLogin(Login.this);
 
         //Facebook init
         callbackFacebook = CallbackManager.Factory.create();
 
         //Google init
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("284354529342-6j420h8tdg4m860gq6a6es4iactng2j7.apps.googleusercontent.com")
+                .requestIdToken("392196802809-d0hcs11rhsukn6sgu7k3iovaam6tbfp4.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -82,6 +73,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         googleSignInClient.signOut();
+                        System.out.println("Here");
                         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                         LoginWithGoogle(task);
                     }
@@ -184,9 +176,9 @@ public class Login extends AppCompatActivity {
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
 
-            authenticationController.loginWithGoogle(Login.this,account.getEmail(),account.getGivenName(),account.getFamilyName());
+            authenticationController.loginWithGoogle(Login.this, account.getEmail(), account.getGivenName(), account.getFamilyName());
         } catch (ApiException e) {
-
+            authenticationController.showMessageDialog(Login.this, "Errore durante l'autenticazione", null);
         }
     }
 
