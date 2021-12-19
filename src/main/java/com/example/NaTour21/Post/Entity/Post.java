@@ -29,7 +29,6 @@ public class Post {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "post")
 	@JsonManagedReference
 	private Waypoints way;
-	//change
 
 
 }
