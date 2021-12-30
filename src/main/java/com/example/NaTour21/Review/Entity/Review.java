@@ -21,6 +21,6 @@ public class Review {
     @Column(columnDefinition = "serial",name="id")
     private Long id;
 
-    private int id_post;
+    private int id_post;//
 
 }
