@@ -29,11 +29,6 @@ public class PostService {
 	private final PostRepository postRepository;
 
 
-	SessionFactory sessionFactory;
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
 	
 	
 	public List<Post> getPosts(){
@@ -49,21 +44,5 @@ public class PostService {
 
 	}
 
-	public List <Post> getPostsandWaypoints() throws HibernateException{
-		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("SELECT p.description,p.review,p.title,p.minutes, p.id, w.lat1,w.lat2,w.lon1,w.lon2 FROM post p INNER JOIN p.waypoints w");
-		//List<Post> results = query.getResultList();
-		List<Post> results = session.createCriteria(Post.class).list();
-		if(results!= null && results.size()>0){
-			return results;
-		}
-		return null;
-	}
-
-
-	public static HttpSession session() {
-		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-		return attr.getRequest().getSession(true); // true == allow create
-	}
 
 }

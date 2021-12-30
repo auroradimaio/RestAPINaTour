@@ -29,8 +29,4 @@ public class WaypointsService {
         return waypointsRepository.findAll();
     }
 
-   /* public Waypoints getWaypointsByWay_id(Long way_id){
-        Waypoints waypoints = waypointsRepository.findWaypointsByWay_id(way_id);
-        return waypoints;
-    }*/
 }

@@ -39,11 +39,6 @@ public class PostController {
 		 return ResponseEntity.ok().body(response);
 	 }
 
-	 @GetMapping("/postsway")
-	 public ResponseEntity<BasicResponse>getPostsWay(){
-		 BasicResponse response = new BasicResponse(postService.getPostsandWaypoints().toArray(),"Ok");
-		 return ResponseEntity.ok().body(response);
-	 }
 
 
 	 @PostMapping("/post/insert")

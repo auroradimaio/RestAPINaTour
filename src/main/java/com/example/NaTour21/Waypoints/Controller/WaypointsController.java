@@ -27,11 +27,7 @@ public class WaypointsController {
         return ResponseEntity.ok().body(response);
     }
 
-/*    @GetMapping("/waypoints/way_id")
-    public ResponseEntity<BasicResponse>getWaypointsByWay_id(@Param("way_id") Long way_id){
-        BasicResponse response = new BasicResponse(waypointsService.getWaypointsByWay_id(way_id),"Ok");
-        return ResponseEntity.ok().body(response);
-    }*/
+
 
 
     @PostMapping("/insert/waypoints")

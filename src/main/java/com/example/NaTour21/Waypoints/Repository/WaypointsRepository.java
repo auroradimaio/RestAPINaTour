@@ -8,8 +8,7 @@ import java.util.Optional;
 
 public interface WaypointsRepository extends JpaRepository<Waypoints, Long> {
 
-   // Waypoints findWaypointsByWay_id(Long way_id);
-   // List<Waypoints> findWaypointsByWay_id(Integer way_id);
+
     List<Waypoints>findAll();
 
 
