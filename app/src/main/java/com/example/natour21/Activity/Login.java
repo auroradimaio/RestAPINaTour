@@ -1,28 +1,18 @@
 package com.example.natour21.Activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-
-import com.example.natour21.Controller.authenticationController;
 import com.example.natour21.R;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
+import com.facebook.*;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -31,12 +21,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-
+import com.example.natour21.Controller.authenticationController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
 public class Login extends AppCompatActivity {
 
@@ -50,17 +41,16 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        setContentView(R.layout.activity_login);
 
         authenticationController.checkLogin(Login.this);
+
 
         //Facebook init
         callbackFacebook = CallbackManager.Factory.create();
 
         //Google init
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("392196802809-d0hcs11rhsukn6sgu7k3iovaam6tbfp4.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -72,15 +62,13 @@ public class Login extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        googleSignInClient.signOut();
-                        System.out.println("Here");
                         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                         LoginWithGoogle(task);
                     }
                 });
 
 
-        EditText email = findViewById(R.id.et_email);
+        EditText username = findViewById(R.id.et_username);
         EditText password = findViewById(R.id.et_password);
         Button btnLoginWithFacebook = findViewById(R.id.btnLoginWithFacebook);
         Button btnLoginWithGoogle = findViewById(R.id.btnLoginWithGoogle);
@@ -91,7 +79,7 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                authenticationController.login(Login.this, email.getText().toString(), password.getText().toString(), rememberMe.isChecked());
+                authenticationController.loginNATOUR21(Login.this, username.getText().toString(), password.getText().toString(), rememberMe.isChecked());
             }
         });
 
@@ -99,6 +87,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Login.this, Register.class));
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             }
         });
 
@@ -113,6 +102,7 @@ public class Login extends AppCompatActivity {
         btnLoginWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                googleSignInClient.signOut();
                 Intent signInIntent = googleSignInClient.getSignInIntent();
                 mLauncher.launch(signInIntent);
             }
@@ -141,10 +131,7 @@ public class Login extends AppCompatActivity {
                                     public void onCompleted(JSONObject object, GraphResponse response) {
                                         try {
                                             String email = response.getJSONObject().getString("email");
-                                            String firstName = response.getJSONObject().getString("first_name");
-                                            String lastName = response.getJSONObject().getString("last_name");
-
-                                            authenticationController.loginWithFacebook(Login.this, email, firstName, lastName);
+                                            authenticationController.loginWithFacebook(Login.this, email);
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -152,7 +139,7 @@ public class Login extends AppCompatActivity {
                                     }
                                 });
                         Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,email,first_name,last_name");
+                        parameters.putString("fields", "id,email");
                         request.setParameters(parameters);
                         request.executeAsync();
                     }
@@ -164,7 +151,7 @@ public class Login extends AppCompatActivity {
 
                     @Override
                     public void onError(FacebookException exception) {
-                        authenticationController.showMessageDialog(Login.this, "Errore durante l'autenticazione", null);
+                        showMessageDialog(Login.this, "Errore durante l'autenticazione", null);
                     }
                 });
 
@@ -175,10 +162,9 @@ public class Login extends AppCompatActivity {
 
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
-
-            authenticationController.loginWithGoogle(Login.this, account.getEmail(), account.getGivenName(), account.getFamilyName());
+            authenticationController.loginWithGoogle(this, account.getEmail());
         } catch (ApiException e) {
-            authenticationController.showMessageDialog(Login.this, "Errore durante l'autenticazione", null);
+            e.printStackTrace();
         }
     }
 

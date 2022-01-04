@@ -3,13 +3,15 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+              android:background="@drawable/bg_round_corner">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+            >
     <TextView
         android:id="@+id/messagetxt"
         android:layout_marginTop="32dp"
@@ -30,6 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textColor="@color/white"
         android:text="OK"
         app:backgroundTint="@null"/>
     </LinearLayout>

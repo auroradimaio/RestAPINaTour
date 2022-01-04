@@ -1,40 +1,47 @@
 package com.example.natour21.Activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.navigation.NavController;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.natour21.Controller.authenticationController;
+import com.example.natour21.Pusher.PusherManager;
 import com.example.natour21.R;
+
+import static androidx.navigation.Navigation.findNavController;
 
 public class homePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.homepage);
+        setContentView(R.layout.activity_home_page);
 
-        Button btnLogout = findViewById(R.id.btnLogout);
+        BottomNavigationView navView = findViewById(R.id.nav_view);
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                authenticationController.logout(homePage.this, authenticationController.auth, false);
-            }
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home,
+                R.id.navigation_chat_list,
+                R.id.navigation_reports)
+                .build();
+        NavController navController = findNavController(this, R.id.nav_host_fragment);
+
+        BottomNavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.getMenu().findItem(R.id.navigation_logout).setOnMenuItemClickListener(menuItem -> {
+            authenticationController.logout(this, false);
+            return true;
         });
 
-        TextView accesstoken = findViewById(R.id.accessToken);
-        TextView refreshtoken = findViewById(R.id.refreshToken);
-        TextView email = findViewById(R.id.email);
-        TextView auth = findViewById(R.id.auth);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
 
-        accesstoken.setText("AccessToken: " + authenticationController.accessToken);
-        refreshtoken.setText("RefreshToken: " + authenticationController.refreshToken);
-        email.setText("Email: " + authenticationController.userEmail);
-        auth.setText("Auth: " + authenticationController.auth);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.show();
 
+        PusherManager.initChatListner();
     }
+
 }

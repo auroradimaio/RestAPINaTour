@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.natour21.Controller.authenticationController;
 import com.example.natour21.R;
 
@@ -15,12 +13,11 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
+        setContentView(R.layout.activity_register);
 
         Button btnRegister = findViewById(R.id.btnRegister);
 
-        EditText firstName = findViewById(R.id.et_firstName);
-        EditText lastName = findViewById(R.id.et_lastName);
+        EditText username = findViewById(R.id.et_username);
         EditText email = findViewById(R.id.et_email);
         EditText password = findViewById(R.id.et_password);
         EditText confirmPassword = findViewById(R.id.et_ConfirmPassword);
@@ -28,8 +25,14 @@ public class Register extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                authenticationController.register(Register.this,firstName.getText().toString(),lastName.getText().toString(),email.getText().toString(),password.getText().toString(),confirmPassword.getText().toString(), "NaTour21");
+                authenticationController.registerNATOUR21(Register.this,username.getText().toString(),email.getText().toString(),password.getText().toString(),confirmPassword.getText().toString());
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 }

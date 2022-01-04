@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginVertical="10dp"
+			android:orientation="horizontal">
+		
+		
+		<ImageView
+				android:id="@+id/userImage"
+				android:layout_width="60dp"
+				android:layout_height="60dp"
+				android:background="@drawable/user1"
+				android:layout_marginStart="10dp"/>
+		
+		<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+			
+			<TextView
+					android:id="@+id/username"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="10dp"
+					android:text="Nome utente"
+					android:textColor="@color/green"
+					android:textSize="20dp"
+					android:maxLines="1"
+					android:ellipsize="end"
+					android:textStyle="bold" />
+			
+			<TextView
+					android:id="@+id/report_description"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					android:layout_marginStart="10dp"
+					android:layout_marginEnd="60dp"
+					android:maxLines="1"
+					android:ellipsize="end"
+					android:text="Ha segnalato il tuo post NomePost">
+			</TextView>
+		
+		</LinearLayout>
+	
+	</LinearLayout>
+
+
+</RelativeLayout>
