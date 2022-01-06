@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.natour21.Controller.ReviewController;
-import com.example.natour21.Dialog;
+import com.example.natour21.Dialog.Dialog;
 import com.example.natour21.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

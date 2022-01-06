@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.natour21.API.Config;
 import com.example.natour21.Adapter.ReviewAdapter;
+import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.Item.ReviewItem;
 import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ReviewAPI {
@@ -83,9 +86,19 @@ public class ReviewAPI {
                 error.printStackTrace();
                 Toast.makeText(activity,error.toString(),Toast.LENGTH_LONG).show();
             }
-        }
+        }){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
 
-        );
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + AuthenticationController.accessToken);
+                return params;
+            }
+        };
 
         requestQueue.add(request);
 
@@ -130,6 +143,13 @@ public class ReviewAPI {
                 } catch (UnsupportedEncodingException uee) {
                     return null;
                 }
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + AuthenticationController.accessToken);
+                return params;
             }
         };
 

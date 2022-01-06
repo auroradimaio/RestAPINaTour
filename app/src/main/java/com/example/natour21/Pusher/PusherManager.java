@@ -46,9 +46,21 @@ public class PusherManager {
             }
         }, ConnectionState.ALL);
 
-        Channel channel = pusher.subscribe(AuthenticationController.user_username);
+        Channel channel_username = pusher.subscribe(AuthenticationController.user_username);
+        Channel channel_post = pusher.subscribe("post");
 
-        channel.bind("newMessage", new SubscriptionEventListener() {
+        channel_post.bind("newPost", new SubscriptionEventListener() {
+            @Override
+            public void onEvent(PusherEvent event) {
+                if(event.getEventName().equals("newPost"))
+                {
+                    //Aggiornamento posts se è nell'homepage
+                }
+            }
+        });
+
+
+        channel_username.bind("newMessage", new SubscriptionEventListener() {
             @Override
             public void onEvent(PusherEvent event) {
                 if(event.getEventName().equals("newMessage"))
@@ -76,7 +88,7 @@ public class PusherManager {
             }
         });
 
-        channel.bind("report", new SubscriptionEventListener() {
+        channel_username.bind("report", new SubscriptionEventListener() {
             @Override
             public void onEvent(PusherEvent event) {
                 if(event.getEventName().equals("report"))
@@ -97,7 +109,7 @@ public class PusherManager {
             }
         });
 
-        channel.bind("report_response", new SubscriptionEventListener() {
+        channel_username.bind("report_response", new SubscriptionEventListener() {
             @Override
             public void onEvent(PusherEvent event) {
                 if(event.getEventName().equals("report_response"))

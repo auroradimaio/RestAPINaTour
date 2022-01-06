@@ -28,28 +28,27 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
+import br.com.onimur.handlepathoz.HandlePathOz;
+import br.com.onimur.handlepathoz.HandlePathOzListener;
+import br.com.onimur.handlepathoz.model.PathOz;
 import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
-import com.example.natour21.Constants;
 import com.example.natour21.Controller.PostController;
 import com.example.natour21.Controller.WaypointsController;
-import com.example.natour21.Dialog;
+import com.example.natour21.Dialog.Dialog;
 import com.example.natour21.R;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
+import com.example.natour21.Utils.Constants;
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import io.ticofab.androidgpxparser.parser.GPXParser;
+import io.ticofab.androidgpxparser.parser.domain.Gpx;
+import io.ticofab.androidgpxparser.parser.domain.Track;
+import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
+import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.xmlpull.v1.XmlPullParserException;
@@ -59,16 +58,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-
-import br.com.onimur.handlepathoz.HandlePathOz;
-import br.com.onimur.handlepathoz.HandlePathOzListener;
-import br.com.onimur.handlepathoz.model.PathOz;
-import io.ticofab.androidgpxparser.parser.GPXParser;
-import io.ticofab.androidgpxparser.parser.domain.Gpx;
-import io.ticofab.androidgpxparser.parser.domain.Track;
-import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
-import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 
 
 public class inserimentoItinerario extends Fragment implements OnMapReadyCallback, RoutingListener, HandlePathOzListener.SingleUri {
@@ -150,16 +139,6 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
                     }
                 }
         );
-
-        ImageButton imgBtnBack = (ImageButton) view.findViewById(R.id.imgBtn_back);
-        imgBtnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_inserimentoItinerario_to_navigation_home);
-            }
-        });
-
-
 
         time = view.findViewById(R.id.time_editText);
         title= view.findViewById(R.id.title_editText);

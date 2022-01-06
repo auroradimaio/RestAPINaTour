@@ -37,7 +37,7 @@ public class NewReportFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_report, container, false);
+        View view = inflater.inflate(R.layout.fragment_new_report, container, false);
 
         Bundle bundle = this.getArguments();
         String title = bundle.getString("TitoloSentiero");

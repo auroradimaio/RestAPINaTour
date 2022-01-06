@@ -17,16 +17,14 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.natour21.Activity.homePage;
 
 
 import com.example.natour21.Adapter.PostAdapter;
+import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.Controller.ChatController;
 import com.example.natour21.Controller.ReportController;
 import com.example.natour21.Item.PostItem;
@@ -38,7 +36,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -119,7 +120,7 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
     }
 
     private void parseJSON(){
-        String url = "http://192.168.1.14:8080/api/posts";
+        String url = "http://192.168.1.9:8080/api/posts";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -176,8 +177,19 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
                 error.printStackTrace();
                 Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
             }
-        }
-        );
+        }){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + AuthenticationController.accessToken);
+                return params;
+            }
+        };
 
         mRequestQueue.add(request);
 
