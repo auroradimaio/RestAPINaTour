@@ -12,9 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.natour21.Adapter.ChatListAdapter;
-import com.example.natour21.Controller.chatController;
-import com.example.natour21.Controller.reportController;
-import com.example.natour21.Entity.ChatRoom;
+import com.example.natour21.Controller.ChatController;
+import com.example.natour21.Controller.ReportController;
+import com.example.natour21.Item.ChatRoom;
 import com.example.natour21.R;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public class ChatListFragment extends Fragment  {
         newMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chatController.openNewMessage(getActivity());
+                ChatController.openNewMessage(getActivity());
             }
         });
 
@@ -54,11 +54,11 @@ public class ChatListFragment extends Fragment  {
     @Override
     public void onResume() {
         super.onResume();
-        chatController.chattingWith = "";
-        chatController.onChatList = true;
-        chatController.onSingleChat = false;
-        reportController.onReportList = false;
-        chatController.chatListActivity = getActivity();
-        chatController.getChatList();
+        ChatController.chattingWith = "";
+        ChatController.onChatList = true;
+        ChatController.onSingleChat = false;
+        ReportController.onReportList = false;
+        ChatController.chatListActivity = getActivity();
+        ChatController.getChatList();
     }
 }

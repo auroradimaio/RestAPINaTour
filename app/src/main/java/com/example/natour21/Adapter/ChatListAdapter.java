@@ -8,9 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.natour21.Controller.chatController;
-import com.example.natour21.Entity.ChatRoom;
-import com.example.natour21.Entity.Report;
+import com.example.natour21.Controller.ChatController;
+import com.example.natour21.Item.ChatRoom;
 import com.example.natour21.R;
 import com.example.natour21.Utils.ImagePicker;
 
@@ -46,8 +45,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chatController.chattingWith = chatRoom.getUsername();
-                chatController.openSingleChat((Activity) holder.itemView.getContext(), chatRoom.getUsername());
+                ChatController.chattingWith = chatRoom.getUsername();
+                ChatController.openSingleChat((Activity) holder.itemView.getContext(), chatRoom.getUsername());
             }
         });
 

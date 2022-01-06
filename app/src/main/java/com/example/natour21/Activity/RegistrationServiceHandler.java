@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.natour21.Controller.authenticationController;
+import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.R;
 
 public class RegistrationServiceHandler extends AppCompatActivity {
@@ -29,11 +29,11 @@ public class RegistrationServiceHandler extends AppCompatActivity {
             public void onClick(View view) {
                 if(isFacebook)
                 {
-                    authenticationController.registerFACEBOOK(RegistrationServiceHandler.this, email, username.getText().toString());
+                    AuthenticationController.registerFACEBOOK(RegistrationServiceHandler.this, email, username.getText().toString());
                 }
                 else
                 {
-                    authenticationController.registerGOOGLE(RegistrationServiceHandler.this, email, username.getText().toString());
+                    AuthenticationController.registerGOOGLE(RegistrationServiceHandler.this, email, username.getText().toString());
                 }
             }
         });

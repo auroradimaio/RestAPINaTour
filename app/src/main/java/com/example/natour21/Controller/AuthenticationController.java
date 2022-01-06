@@ -27,7 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
-public class authenticationController {
+public class AuthenticationController {
 
     protected static String accessToken;
     public static String user_username;
@@ -107,12 +107,12 @@ public class authenticationController {
                                                     JSONObject jsonObject = new JSONObject(response);
                                                     if (jsonObject.getString("status").equals("OK")) {
                                                         accessToken = jsonObject.getJSONObject("result").getString("accessToken");
-                                                        authenticationController.user_username = jsonObject.getJSONObject("result").getString("username");
+                                                        AuthenticationController.user_username = jsonObject.getJSONObject("result").getString("username");
                                                         if (rememberMe) {
                                                             SharedPreferences sharedPreferences = activity.getSharedPreferences("rememberMe", Context.MODE_PRIVATE);
                                                             SharedPreferences.Editor editor = sharedPreferences.edit();
                                                             editor.putString("remember", "true");
-                                                            editor.putString("username", authenticationController.user_username);
+                                                            editor.putString("username", AuthenticationController.user_username);
                                                             editor.putString("accessToken", accessToken);
                                                             editor.putString("auth", auth);
                                                             editor.apply();

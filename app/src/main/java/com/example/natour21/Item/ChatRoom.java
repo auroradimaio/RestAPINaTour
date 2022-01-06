@@ -1,4 +1,4 @@
-package com.example.natour21.Entity;
+package com.example.natour21.Item;
 
 public class ChatRoom {
 

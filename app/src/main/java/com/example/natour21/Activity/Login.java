@@ -21,7 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.example.natour21.Controller.authenticationController;
+import com.example.natour21.Controller.AuthenticationController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,7 +43,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        authenticationController.checkLogin(Login.this);
+        AuthenticationController.checkLogin(Login.this);
 
 
         //Facebook init
@@ -79,7 +79,7 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                authenticationController.loginNATOUR21(Login.this, username.getText().toString(), password.getText().toString(), rememberMe.isChecked());
+                AuthenticationController.loginNATOUR21(Login.this, username.getText().toString(), password.getText().toString(), rememberMe.isChecked());
             }
         });
 
@@ -131,7 +131,7 @@ public class Login extends AppCompatActivity {
                                     public void onCompleted(JSONObject object, GraphResponse response) {
                                         try {
                                             String email = response.getJSONObject().getString("email");
-                                            authenticationController.loginWithFacebook(Login.this, email);
+                                            AuthenticationController.loginWithFacebook(Login.this, email);
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -162,7 +162,7 @@ public class Login extends AppCompatActivity {
 
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
-            authenticationController.loginWithGoogle(this, account.getEmail());
+            AuthenticationController.loginWithGoogle(this, account.getEmail());
         } catch (ApiException e) {
             e.printStackTrace();
         }

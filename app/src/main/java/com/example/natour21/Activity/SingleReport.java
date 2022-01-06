@@ -6,8 +6,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.natour21.Controller.authenticationController;
-import com.example.natour21.Controller.reportController;
+import com.example.natour21.Controller.AuthenticationController;
+import com.example.natour21.Controller.ReportController;
 import com.example.natour21.R;
 
 public class SingleReport extends AppCompatActivity {
@@ -44,7 +44,7 @@ public class SingleReport extends AppCompatActivity {
 
         btnSend = findViewById(R.id.btnSendResponse);
 
-        if(getIntent().getExtras().getString("report_sender").equals(authenticationController.user_username))
+        if(getIntent().getExtras().getString("report_sender").equals(AuthenticationController.user_username))
         {
             sender.setText("Tu");
             messageResponse.setVisibility(View.GONE);
@@ -58,7 +58,7 @@ public class SingleReport extends AppCompatActivity {
                 response.setText("");
             }
 
-        }else if(getIntent().getExtras().getString("post_owner").equals(authenticationController.user_username))
+        }else if(getIntent().getExtras().getString("post_owner").equals(AuthenticationController.user_username))
         {
             sender.setText(getIntent().getExtras().getString("report_sender"));
 
@@ -76,7 +76,7 @@ public class SingleReport extends AppCompatActivity {
                 btnSend.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        reportController.sendResponse(SingleReport.this, reportId, messageResponse.getText().toString());
+                        ReportController.sendResponse(SingleReport.this, reportId, messageResponse.getText().toString());
                         messageResponse.setText("");
                     }
                 });

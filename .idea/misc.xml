@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/btn_homepage.xml" value="0.18229166666666666" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.19791666666666666" />
@@ -16,13 +17,21 @@
         <entry key="app/src/main/res/layout/activity_single_chat.xml" value="0.1953125" />
         <entry key="app/src/main/res/layout/activity_single_report.xml" value="0.29846014492753625" />
         <entry key="app/src/main/res/layout/customdialog.xml" value="0.1953125" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_inserimento_itinerario.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/fragment_insert_review.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/fragment_report.xml" value="0.1" />
         <entry key="app/src/main/res/layout/homepage.xml" value="0.12" />
+        <entry key="app/src/main/res/layout/item_template.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/layout_dialog.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/receiver_message.xml" value="0.29846014492753625" />
         <entry key="app/src/main/res/layout/register.xml" value="0.1" />
         <entry key="app/src/main/res/layout/report_layout.xml" value="0.1953125" />
         <entry key="app/src/main/res/layout/sender_message.xml" value="0.29846014492753625" />
         <entry key="app/src/main/res/layout/user_chat_layout.xml" value="0.1953125" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
   </component>

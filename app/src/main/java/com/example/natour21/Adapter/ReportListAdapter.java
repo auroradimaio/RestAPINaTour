@@ -8,9 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.natour21.Controller.authenticationController;
-import com.example.natour21.Controller.reportController;
-import com.example.natour21.Entity.Report;
+import com.example.natour21.Controller.AuthenticationController;
+import com.example.natour21.Controller.ReportController;
+import com.example.natour21.Item.Report;
 import com.example.natour21.R;
 import com.example.natour21.Utils.ImagePicker;
 
@@ -38,10 +38,10 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Re
 
         Report report = reports.get(position);
 
-        if(report.getSender().equals(authenticationController.user_username))
+        if(report.getSender().equals(AuthenticationController.user_username))
         {
 
-            holder.userImage.setImageResource(ImagePicker.getImage(authenticationController.user_username));
+            holder.userImage.setImageResource(ImagePicker.getImage(AuthenticationController.user_username));
             holder.username.setText(report.getTitle());
             if(report.getResponse().equals(""))
             {
@@ -62,7 +62,7 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Re
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reportController.openSingleReport((Activity) holder.itemView.getContext(), report);
+                ReportController.openSingleReport((Activity) holder.itemView.getContext(), report);
             }
         });
 

@@ -7,8 +7,8 @@ import com.example.natour21.API.Message.MessageAPI;
 import com.example.natour21.API.ChatRoom.ChatRoomAPI;
 import com.example.natour21.Activity.SendMessage;
 import com.example.natour21.Activity.SingleChat;
-import com.example.natour21.Entity.ChatRoom;
-import com.example.natour21.Entity.Message;
+import com.example.natour21.Item.ChatRoom;
+import com.example.natour21.Item.Message;
 import com.example.natour21.Fragment.ChatListFragment;
 import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
@@ -21,7 +21,7 @@ import java.util.List;
 
 import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
-public class chatController {
+public class ChatController {
 
 
     public static FragmentActivity chatListActivity;
@@ -36,7 +36,7 @@ public class chatController {
 
         chatRoomList.clear();
 
-        ChatRoomAPI.getChatRooms(chatListActivity, authenticationController.user_username, authenticationController.accessToken, new VolleyCallback() {
+        ChatRoomAPI.getChatRooms(chatListActivity, AuthenticationController.user_username, AuthenticationController.accessToken, new VolleyCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -53,7 +53,7 @@ public class chatController {
                         ChatListFragment.updateUI(chatRoomList);
                     }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
                     {
-                        authenticationController.logout(chatListActivity, true);
+                        AuthenticationController.logout(chatListActivity, true);
                     }
 
                 } catch (JSONException jsonException) {
@@ -90,7 +90,7 @@ public class chatController {
 
         singleChat.clear();
 
-        ChatRoomAPI.getSingleChat(singleChatActivity, authenticationController.user_username, email, authenticationController.accessToken, new VolleyCallback() {
+        ChatRoomAPI.getSingleChat(singleChatActivity, AuthenticationController.user_username, email, AuthenticationController.accessToken, new VolleyCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -107,7 +107,7 @@ public class chatController {
                         SingleChat.updateUI(singleChat);
                     }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
                     {
-                        authenticationController.logout(singleChatActivity, true);
+                        AuthenticationController.logout(singleChatActivity, true);
                     }
 
                 } catch (JSONException jsonException) {
@@ -127,7 +127,7 @@ public class chatController {
 
         messageContent = messageContent.trim();
         if(messageContent.length() > 0) {
-            MessageAPI.sendMessage(singleChatActivity, authenticationController.user_username, chattingWith, messageContent, authenticationController.accessToken, new VolleyCallback() {
+            MessageAPI.sendMessage(singleChatActivity, AuthenticationController.user_username, chattingWith, messageContent, AuthenticationController.accessToken, new VolleyCallback() {
                 @Override
                 public void onSuccess(String response) {
                     try {
@@ -139,7 +139,7 @@ public class chatController {
                                     jsonObject.getJSONObject("result").getLong("time"));
                         }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
                         {
-                            authenticationController.logout(chatListActivity, true);
+                            AuthenticationController.logout(chatListActivity, true);
                         }
 
                     } catch (JSONException jsonException) {
@@ -163,10 +163,10 @@ public class chatController {
     public static void sendNewMessage(Activity activity, String username, String messageContent) {
 
         if(username.length() > 0) {
-            if (!username.equals(authenticationController.user_username)) {
+            if (!username.equals(AuthenticationController.user_username)) {
                 messageContent = messageContent.trim();
                 if(messageContent.length() > 0 && !messageContent.equals("")) {
-                    MessageAPI.sendMessage(activity, authenticationController.user_username, username, messageContent, authenticationController.accessToken, new VolleyCallback() {
+                    MessageAPI.sendMessage(activity, AuthenticationController.user_username, username, messageContent, AuthenticationController.accessToken, new VolleyCallback() {
                         @Override
                         public void onSuccess(String response) {
                             try {
@@ -178,7 +178,7 @@ public class chatController {
                                     showMessageDialog(activity, "Impossibile trovare il nome utente", null);
                                 }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
                                 {
-                                    authenticationController.logout(chatListActivity, true);
+                                    AuthenticationController.logout(chatListActivity, true);
                                 }
 
                             } catch (JSONException jsonException) {

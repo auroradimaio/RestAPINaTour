@@ -16,6 +16,11 @@
         <action
                 android:id="@+id/action_navigation_home_to_navigation_chat_list"
                 app:destination="@id/navigation_chat_list"/>
+        <action
+                android:id="@+id/action_navigation_home_to_inserimentoItinerario"
+                app:destination="@id/inserimentoItinerario"/>
+        <tion android:id="@+id/action_navigation_home_to_postDetailsFragment"
+                app:destination="@id/postDetailsFragment"/>
     </fragment>
 
     <fragment
@@ -29,5 +34,39 @@
             android:name="com.example.natour21.Fragment.ReportsFragment"
             android:label="Segnalazioni"
             tools:layout="@layout/fragment_reports"/>
+    
+    <fragment
+            android:id="@+id/inserimentoItinerario"
+            android:name="com.example.natour21.Fragment.inserimentoItinerario"
+            android:label="Inserisci itinerario"
+            tools:layout="@layout/fragment_inserimento_itinerario" >
+        <action
+                android:id="@+id/action_inserimentoItinerario_to_navigation_home"
+                app:destination="@id/navigation_home" />
+    </fragment>
+    
+    <fragment
+            android:id="@+id/postDetailsFragment"
+            android:name="com.example.natour21.Fragment.postDetailsFragment"
+            android:label="fragment_post_details"
+            tools:layout="@layout/fragment_post_details" >
+        <action
+                android:id="@+id/action_postDetailsFragment_to_insertReviewFragment"
+                app:destination="@id/insertReviewFragment" />
+        <action
+                android:id="@+id/action_postDetailsFragment_to_reportFragment"
+                app:destination="@id/reportFragment" />
+    </fragment>
+    
+    <fragment
+            android:id="@+id/insertReviewFragment"
+            android:name="com.example.natour21.Fragment.insertReviewFragment"
+            android:label="fragment_insert_review"
+            tools:layout="@layout/fragment_insert_review" />
+    <fragment
+            android:id="@+id/reportFragment"
+            android:name="com.example.natour21.Fragment.NewReportFragment"
+            android:label="fragment_report"
+            tools:layout="@layout/fragment_new_report" />
     
 </navigation>

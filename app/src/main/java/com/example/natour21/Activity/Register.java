@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.natour21.Controller.authenticationController;
+import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.R;
 
 public class Register extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class Register extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                authenticationController.registerNATOUR21(Register.this,username.getText().toString(),email.getText().toString(),password.getText().toString(),confirmPassword.getText().toString());
+                AuthenticationController.registerNATOUR21(Register.this,username.getText().toString(),email.getText().toString(),password.getText().toString(),confirmPassword.getText().toString());
             }
         });
     }

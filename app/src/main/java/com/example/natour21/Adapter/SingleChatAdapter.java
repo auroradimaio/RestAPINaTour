@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.natour21.Controller.authenticationController;
-import com.example.natour21.Entity.Message;
+import com.example.natour21.Controller.AuthenticationController;
+import com.example.natour21.Item.Message;
 import com.example.natour21.R;
 
 import java.util.List;
@@ -47,7 +47,7 @@ public class SingleChatAdapter extends RecyclerView.Adapter<SingleChatAdapter.Me
     @Override
     public int getItemViewType(int position) {
         Message message = chatMessages.get(position);
-        if(message.getEmail().equals(authenticationController.user_username))
+        if(message.getEmail().equals(AuthenticationController.user_username))
         {
             return 0;
         }

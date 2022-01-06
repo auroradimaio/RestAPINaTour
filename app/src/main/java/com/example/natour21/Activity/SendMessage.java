@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.natour21.Controller.chatController;
+import com.example.natour21.Controller.ChatController;
 import com.example.natour21.R;
 
 public class SendMessage extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class SendMessage extends AppCompatActivity {
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chatController.sendNewMessage(SendMessage.this, username.getText().toString(), messageContent.getText().toString());
+                ChatController.sendNewMessage(SendMessage.this, username.getText().toString(), messageContent.getText().toString());
                 username.setText("");
                 messageContent.setText("");
             }

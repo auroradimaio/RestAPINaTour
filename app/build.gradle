@@ -25,8 +25,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     buildFeatures {
         viewBinding true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
     }
 }
 
@@ -52,11 +57,22 @@ dependencies {
     //Dependency Chat
     implementation 'com.pusher:pusher-java-client:2.2.6'
 
-
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'org.testng:testng:6.9.6'
+
+    //Dependency GoogleMaps
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.maps:google-maps-services:1.0.1'
+
+    //Dependency GPX
+    implementation 'com.github.ticofab:android-gpx-parser:2.0.1'
+
 
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

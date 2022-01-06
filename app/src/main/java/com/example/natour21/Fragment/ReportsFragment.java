@@ -11,11 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.natour21.Adapter.ChatListAdapter;
 import com.example.natour21.Adapter.ReportListAdapter;
-import com.example.natour21.Controller.chatController;
-import com.example.natour21.Controller.reportController;
-import com.example.natour21.Entity.Report;
+import com.example.natour21.Controller.ChatController;
+import com.example.natour21.Controller.ReportController;
+import com.example.natour21.Item.Report;
 import com.example.natour21.R;
 
 import java.util.List;
@@ -51,10 +50,10 @@ public class ReportsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        reportController.reportListActivity = getActivity();
-        chatController.onChatList = false;
-        chatController.onSingleChat = false;
-        reportController.onReportList = true;
-        reportController.getReportList();
+        ReportController.reportListActivity = getActivity();
+        ChatController.onChatList = false;
+        ChatController.onSingleChat = false;
+        ReportController.onReportList = true;
+        ReportController.getReportList();
     }
 }

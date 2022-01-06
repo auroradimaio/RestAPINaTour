@@ -18,4 +18,11 @@ public class Config {
     public static final String SEND_MESSAGE = "/message/send";
     public static final String GET_REPORTS = "/reports";
     public static final String SEND_REPORT_RESPONSE = "/report/update";
+    public static final String POST = "/posts";
+    public static final String INSERTPOST = "/post/insert";
+    public static final String INSERTWAYPOINTS = "/insert/waypoints";
+    public static final String GETREVIEWBYID = "/reviews/id?id_post=";
+    public static final String INSERTREVIEW="/review/insert";
+    public static final String INSERTREPORT="/report/insert";
+
 }

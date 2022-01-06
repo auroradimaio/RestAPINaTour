@@ -7,7 +7,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.example.natour21.Controller.authenticationController;
+import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.Pusher.PusherManager;
 import com.example.natour21.R;
 
@@ -31,7 +31,7 @@ public class homePage extends AppCompatActivity {
 
         BottomNavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.getMenu().findItem(R.id.navigation_logout).setOnMenuItemClickListener(menuItem -> {
-            authenticationController.logout(this, false);
+            AuthenticationController.logout(this, false);
             return true;
         });
 

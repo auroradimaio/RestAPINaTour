@@ -98,4 +98,51 @@ public class ReportAPI {
 
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
     }
+
+    public static void InsertReport(Activity activity, String title, String description, int post_id, String sender, int time, String username, VolleyCallback volleyCallback){
+
+        String url = Config.BASE_URL+Config.API+Config.INSERTREPORT;
+        JSONObject jsonBody = new JSONObject();
+        try{
+            jsonBody.put("title",title);
+            jsonBody.put("description",description);
+            jsonBody.put("postId",post_id);
+            jsonBody.put("sender",sender);
+            jsonBody.put("time",time);
+            jsonBody.put("username",username);
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+        }
+
+        final String requestBody = jsonBody.toString();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                volleyCallback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                volleyCallback.onError(error.getMessage());
+            }
+        }
+        ){
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() {
+                try {
+                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    return null;
+                }
+            }
+        };
+
+        VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+    }
 }

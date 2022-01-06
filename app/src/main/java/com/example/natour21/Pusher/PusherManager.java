@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.snackbar.Snackbar;
-import com.example.natour21.Controller.authenticationController;
-import com.example.natour21.Controller.chatController;
-import com.example.natour21.Controller.reportController;
+import com.example.natour21.Controller.AuthenticationController;
+import com.example.natour21.Controller.ChatController;
+import com.example.natour21.Controller.ReportController;
 import com.pusher.client.Pusher;
 import com.pusher.client.PusherOptions;
 import com.pusher.client.channel.Channel;
@@ -46,7 +46,7 @@ public class PusherManager {
             }
         }, ConnectionState.ALL);
 
-        Channel channel = pusher.subscribe(authenticationController.user_username);
+        Channel channel = pusher.subscribe(AuthenticationController.user_username);
 
         channel.bind("newMessage", new SubscriptionEventListener() {
             @Override
@@ -56,11 +56,11 @@ public class PusherManager {
                     try {
                         JSONObject jsonObject = new JSONObject(event.getData());
                         String from = jsonObject.getString("from");
-                        if(chatController.onChatList) {
-                            chatController.getChatList();
-                        }else if(chatController.onSingleChat){
-                                if(chatController.chattingWith.equals(from)) {
-                                    chatController.updateSingleChat(from, jsonObject.getString("content"), jsonObject.getLong("time"));
+                        if(ChatController.onChatList) {
+                            ChatController.getChatList();
+                        }else if(ChatController.onSingleChat){
+                                if(ChatController.chattingWith.equals(from)) {
+                                    ChatController.updateSingleChat(from, jsonObject.getString("content"), jsonObject.getLong("time"));
                                 }else
                                 {
                                     showToast(activity, "Nuovo messaggio da " + from);
@@ -84,8 +84,8 @@ public class PusherManager {
                     try {
                         JSONObject jsonObject = new JSONObject(event.getData());
                         String from = jsonObject.getString("from");
-                        if(reportController.onReportList) {
-                            reportController.getReportList();
+                        if(ReportController.onReportList) {
+                            ReportController.getReportList();
                         }else
                         {
                             showToast(activity, "Nuova segnalazione da " + from);
@@ -103,8 +103,8 @@ public class PusherManager {
                 if(event.getEventName().equals("report_response"))
                 {
                     String from = event.getData().replaceAll("^\"+|\"+$", "");
-                    if(reportController.onReportList) {
-                        reportController.getReportList();
+                    if(ReportController.onReportList) {
+                        ReportController.getReportList();
                     }else
                     {
                         showToast(activity, from + " ha risposto alla tua segnalazione");

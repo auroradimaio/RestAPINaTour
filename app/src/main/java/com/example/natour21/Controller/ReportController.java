@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import com.example.natour21.API.Report.ReportAPI;
 import com.example.natour21.Activity.SingleReport;
-import com.example.natour21.Entity.Report;
+import com.example.natour21.Item.Report;
 import com.example.natour21.Fragment.ReportsFragment;
 import com.example.natour21.Volley.VolleyCallback;
 import org.json.JSONArray;
@@ -19,18 +20,43 @@ import java.util.List;
 
 import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
-public class reportController {
+public class ReportController {
 
 
     public static FragmentActivity reportListActivity;
     public static boolean onReportList = false;
     private static List<Report> reports = new ArrayList<>();
 
+    public static void InsertReport(Activity activity, String title, String description, String sender, int time, int id_post){
+
+        ReportAPI.InsertReport(activity, title, description, id_post, sender, time,AuthenticationController.user_username, new VolleyCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("status").equals("OK")) {
+                        Toast.makeText(activity,"OK",Toast.LENGTH_SHORT).show();
+                    }else if(jsonObject.getString("status").equals("FAILED")){
+                        Toast.makeText(activity,"FAILED",Toast.LENGTH_SHORT).show();
+                    }
+                }catch (JSONException jsonException){
+                    Toast.makeText(activity,jsonException.toString(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(String response) {
+
+            }
+        });
+
+    }
+
     public static void getReportList() {
 
         reports.clear();
 
-        ReportAPI.getReports(reportListActivity, authenticationController.user_username, authenticationController.accessToken, new VolleyCallback() {
+        ReportAPI.getReports(reportListActivity, AuthenticationController.user_username, AuthenticationController.accessToken, new VolleyCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -59,7 +85,7 @@ public class reportController {
                         ReportsFragment.updateUI(reports);
                     }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
                     {
-                        authenticationController.logout(reportListActivity, true);
+                        AuthenticationController.logout(reportListActivity, true);
                     }
 
 
@@ -93,7 +119,7 @@ public class reportController {
         response_message = response_message.trim();
         if(response_message.length() > 0) {
             String finalResponse_message = response_message;
-            ReportAPI.sendResponse(activity, reportId, authenticationController.user_username, response_message, authenticationController.accessToken, new VolleyCallback() {
+            ReportAPI.sendResponse(activity, reportId, AuthenticationController.user_username, response_message, AuthenticationController.accessToken, new VolleyCallback() {
                 @Override
                 public void onSuccess(String response) {
                     try {
@@ -106,7 +132,7 @@ public class reportController {
                             SingleReport.updateUI(finalResponse_message);
                         }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
                         {
-                            authenticationController.logout(activity, true);
+                            AuthenticationController.logout(activity, true);
                         }
 
                     } catch (JSONException jsonException) {
