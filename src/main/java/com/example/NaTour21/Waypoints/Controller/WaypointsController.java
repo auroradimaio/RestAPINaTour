@@ -4,13 +4,8 @@ import com.example.NaTour21.Waypoints.Entity.Waypoints;
 import com.example.NaTour21.Utils.ResponseTemplate.BasicResponse;
 import com.example.NaTour21.Waypoints.Service.WaypointsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 @RestController
 @RequestMapping(path = "/api")

@@ -1,28 +1,15 @@
 package com.example.NaTour21.Post.Controller;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.NaTour21.Post.Entity.Post;
 import com.example.NaTour21.Post.Service.PostService;
-import com.example.NaTour21.User.Entity.User;
-import com.example.NaTour21.User.Service.UserService;
 import com.example.NaTour21.Utils.ResponseTemplate.BasicResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.NaTour21.Waypoints.Entity.Waypoints;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.*;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import javax.swing.plaf.basic.BasicCheckBoxMenuItemUI;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -49,6 +36,20 @@ public class PostController {
 		 } catch (Exception e){
 			 response = new BasicResponse(e.getMessage(), "FAILED");
 		 }
+		 return ResponseEntity.ok().body(response);
+	 }
+
+
+	 @GetMapping("/post/update")
+	public ResponseEntity<BasicResponse>updatePost(@Param("difficulty")String difficulty,@Param("minutes")String minutes,@Param("id")int id){
+		 BasicResponse response = new BasicResponse(postService.updatePost(id,difficulty,minutes),"OK");
+		 return ResponseEntity.ok().body(response);
+
+	 }
+
+	 @GetMapping("/postlast")
+	public ResponseEntity<BasicResponse>getLast(){
+		 BasicResponse response = new BasicResponse((postService.getLastPost()),"OK");
 		 return ResponseEntity.ok().body(response);
 	 }
 

@@ -18,9 +18,13 @@ public class WaypointsService {
 
 
     private final WaypointsRepository waypointsRepository;
+    private final PostRepository postRepository;
 
     public Waypoints saveWaypoints(Waypoints waypoints) {
 
+
+
+            waypoints.setPost(postRepository.findFirstByOrderByIdDesc());
             return waypointsRepository.save(waypoints);
 
     }

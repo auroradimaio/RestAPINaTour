@@ -1,5 +1,7 @@
 package com.example.NaTour21.Post.Service;
 
+import com.example.NaTour21.Waypoints.Entity.Waypoints;
+import com.example.NaTour21.Waypoints.Repository.WaypointsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
@@ -27,6 +29,7 @@ import java.util.*;
 public class PostService {
 	
 	private final PostRepository postRepository;
+	private final WaypointsRepository waypointsRepository;
 
 
 	
@@ -37,12 +40,37 @@ public class PostService {
 		return postRepository.findAll();
 	}
 
+	public Post getLastPost(){
+		return postRepository.findFirstByOrderByIdDesc();
+	}
+
 	public Post savePost(Post post) {
 		{
 			return postRepository.save(post);
+
 		}
 
 	}
+
+	//public Post savePostandWay(Post post, Waypoints way){
+
+		//post.setWay(way);
+		//return postRepository.save(post);
+	//}
+
+
+
+
+	public Post updatePost(Integer id,String difficulty,String minutes){
+		Post post = postRepository.findBy(id);
+
+			post.setDifficulty(difficulty);
+			post.setMinutes(minutes);
+
+
+		return postRepository.save(post);
+	}
+
 
 
 }
