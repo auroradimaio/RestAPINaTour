@@ -51,6 +51,7 @@ public class Login extends AppCompatActivity {
 
         //Google init
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("392196802809-sai0ku2334vtbt4e6p84lee9g1ne3po1.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -134,7 +135,7 @@ public class Login extends AppCompatActivity {
                                             AuthenticationController.loginWithFacebook(Login.this, email);
 
                                         } catch (JSONException e) {
-                                            e.printStackTrace();
+                                            showMessageDialog(Login.this, "Errore durante l'autenticazione", null);
                                         }
                                     }
                                 });
@@ -164,7 +165,9 @@ public class Login extends AppCompatActivity {
             GoogleSignInAccount account = task.getResult(ApiException.class);
             AuthenticationController.loginWithGoogle(this, account.getEmail());
         } catch (ApiException e) {
-            e.printStackTrace();
+            if(e.getStatus().getStatusCode() != 12501) {
+                showMessageDialog(Login.this, "Errore durante l'autenticazione ", null);
+            }
         }
     }
 

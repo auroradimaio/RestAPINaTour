@@ -29,7 +29,7 @@ import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
 public class AuthenticationController {
 
-    protected static String accessToken;
+    public static String accessToken;
     public static String user_username;
     public static String auth;
 
@@ -374,7 +374,7 @@ public class AuthenticationController {
                         showMessageDialog(activity, "Inserire un indirizzo email valido", null);
                     }
                 }else{
-                    showMessageDialog(activity, "Il nome utente può contenere solo caratteri alfanumerici (A-Z, 0-9) e punti (\".\") \n" +
+                    showMessageDialog(activity, "Il nome utente può contenere solo lettere minuscole, numeri e punti (\".\") \n" +
                             "Il nome utente deve essere composto da almeno 4 caratteri\n" +
                             "Il nome utente deve essere composto da massimo 32 caratteri", null);
                 }
@@ -456,7 +456,7 @@ public class AuthenticationController {
             }
         });
         }else{
-            showMessageDialog(activity, "Il nome utente può contenere solo caratteri alfanumerici (A-Z, 0-9) e punti (\".\") \n" +
+            showMessageDialog(activity, "Il nome utente può contenere solo lettere minuscole, numeri e punti (\".\") \n" +
                     "Il nome utente deve essere composto da almeno 4 caratteri\n" +
                     "Il nome utente deve essere composto da massimo 32 caratteri", null);
         }
@@ -527,7 +527,7 @@ public class AuthenticationController {
             }
         });
         }else{
-            showMessageDialog(activity, "Il nome utente può contenere solo caratteri alfanumerici (A-Z, 0-9) e punti (\".\") \n" +
+            showMessageDialog(activity, "Il nome utente può contenere solo lettere minuscole, numeri e punti (\".\") \n" +
                     "Il nome utente deve essere composto da almeno 4 caratteri\n" +
                     "Il nome utente deve essere composto da massimo 32 caratteri", null);
         }
@@ -553,6 +553,7 @@ public class AuthenticationController {
             if(auth.equals(Auth.GOOGLE.toString()))
             {
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken("392196802809-sai0ku2334vtbt4e6p84lee9g1ne3po1.apps.googleusercontent.com")
                         .requestEmail()
                         .build();
                 GoogleSignIn.getClient(activity, gso).signOut();

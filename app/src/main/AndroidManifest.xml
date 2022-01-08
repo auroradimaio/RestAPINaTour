@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NaTour21Personal"
         android:usesCleartextTraffic="true">
+        
         <activity
                 android:name=".Activity.SingleReport"
                 android:exported="true"/>
