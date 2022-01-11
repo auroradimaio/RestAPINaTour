@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.example.natour21.API.Post.PostAPI;
+import com.example.natour21.Controller.PostController;
+import com.example.natour21.Fragment.HomeFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.Controller.ChatController;
@@ -26,6 +30,8 @@ public class PusherManager {
 
     private static Pusher pusher;
     public static Activity activity;
+
+
 
     public static void initChatListner()
     {
@@ -47,17 +53,7 @@ public class PusherManager {
         }, ConnectionState.ALL);
 
         Channel channel_username = pusher.subscribe(AuthenticationController.user_username);
-        Channel channel_post = pusher.subscribe("post");
 
-        channel_post.bind("newPost", new SubscriptionEventListener() {
-            @Override
-            public void onEvent(PusherEvent event) {
-                if(event.getEventName().equals("newPost"))
-                {
-                    //Aggiornamento posts se è nell'homepage
-                }
-            }
-        });
 
 
         channel_username.bind("newMessage", new SubscriptionEventListener() {

@@ -3,7 +3,7 @@ package com.example.natour21.API;
 public class Config {
 
     //public static final String BASE_URL = "http://ec2-3-12-83-96.us-east-2.compute.amazonaws.com:8080";
-    public static final String BASE_URL = "http://192.168.1.9:8080";
+    public static final String BASE_URL = "http://192.168.1.5:8080";
     public static final String API = "/api";
     public static final String LOGIN = "/login";
     public static final String REGISTER_NATOUR21 = "/user/register/natour21";
@@ -24,5 +24,11 @@ public class Config {
     public static final String GETREVIEWBYID = "/reviews/id?id_post=";
     public static final String INSERTREVIEW="/review/insert";
     public static final String INSERTREPORT="/report/insert";
+    public static final String INSERTDIFFICULTY="/insert/difficulty";
+    public static final String INSERTDIFFICULTIES="/insert/difficulties";
+    public static final String GETDIFFICULTYBYID= "/difficulty/id?post_id=";
+    public static final String INSERTDURATION="/insert/duration";
+    public static final String INSERTDURATIONS="/insert/durations";
+    public static final String GETDURATIONBYID="/duration/id?post_id=";
 
 }

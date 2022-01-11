@@ -16,16 +16,19 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.natour21.API.Post.PostAPI;
 import com.example.natour21.Activity.homePage;
 
 
 import com.example.natour21.Adapter.PostAdapter;
 import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.Controller.ChatController;
+import com.example.natour21.Controller.PostController;
 import com.example.natour21.Controller.ReportController;
 import com.example.natour21.Item.PostItem;
 import com.example.natour21.Pusher.PusherManager;
@@ -39,16 +42,18 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeFragment extends Fragment implements PostAdapter.OnItemClickListener {
+public class HomeFragment extends Fragment implements PostAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private RecyclerView mRecyclerView;
-    private PostAdapter mPostAdapter;
-    private ArrayList<PostItem> mPostList;
-    private RequestQueue mRequestQueue;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    public static RecyclerView mRecyclerView;
+    public static PostAdapter mPostAdapter;
+    public static ArrayList<PostItem> mPostList;
+    public static RequestQueue mRequestQueue;
 
 
     @Override
@@ -62,7 +67,10 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
 
 
 
+
     }
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -77,8 +85,12 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
 
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.green));
+
 
         mPostList = new ArrayList<>();
 
@@ -86,7 +98,19 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
 
 
         mRequestQueue = Volley.newRequestQueue(getActivity());
-        parseJSON();
+
+
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+
+                PostController.getPosts(getActivity(),HomeFragment.this,mPostList,mPostAdapter,mRecyclerView,mRequestQueue);
+
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
 
 
 
@@ -119,83 +143,6 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
         super.onResume();
     }
 
-    private void parseJSON(){
-        String url = "http://192.168.1.9:8080/api/posts";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                try {
-                    double lat1=0,lat2=0,lon1=0,lon2=0;
-                    JSONArray jsonArray = response.getJSONArray("result");
-
-                    for(int i = 0; i<jsonArray.length();i++){
-                        JSONObject res = jsonArray.getJSONObject(i);
-                        try {
-                            JSONObject way = res.getJSONObject("way");
-
-                            lat1 = way.getDouble("lat1");
-                            lat2 = way.getDouble("lat2");
-                            lon1 = way.getDouble("lon1");
-                            lon2 = way.getDouble("lon2");
-                        }catch (JSONException je){
-
-                        }
-
-
-                        String title = res.getString("title");
-                        String description = res.getString("description");
-                        String minutes = (String) res.get("minutes");
-                        String min = res.getString("minutes");
-                        String difficulty = res.getString("difficulty");
-                        String startpoint = res.getString("startpoint");
-
-
-                        int id = res.getInt("id");
-
-
-                        mPostList.add(new PostItem(description, minutes, title, lat1, lat2, lon1, lon2,id,difficulty,min,startpoint));
-                    }
-
-
-
-
-                    mPostAdapter = new PostAdapter(getContext(),mPostList);
-                    mRecyclerView.setAdapter(mPostAdapter);
-                    mPostAdapter.setOnItemClickListener(HomeFragment.this::onItemClick);
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_LONG).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
-            }
-        }){
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + AuthenticationController.accessToken);
-                return params;
-            }
-        };
-
-        mRequestQueue.add(request);
-
-    }
-
-
 
 
 
@@ -207,21 +154,27 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
         PostItem clickedItem = mPostList.get(position);
         bundle.putString("Titolo",clickedItem.getTitolo());
         bundle.putString("Descrizione",clickedItem.getDescrizione());
-        bundle.putString("Durata",clickedItem.getDurata());
-        bundle.putString("Difficoltà",clickedItem.getDifficoltà());
         bundle.putString("PuntoInizio",clickedItem.getStartpoint());
         bundle.putDouble("Lat1",clickedItem.getLat1());
         bundle.putDouble("Lat2",clickedItem.getLat2());
         bundle.putDouble("Lon1",clickedItem.getLon1());
         bundle.putDouble("Lon2",clickedItem.getLon2());
         bundle.putInt("Id",clickedItem.getId());
+        bundle.putString("User",clickedItem.getUsername());
 
         fragment.setArguments(bundle);
 
 
-        Log.i("Click","posizioine= "+position+ "descrizione="+clickedItem.getDescrizione() + "lat1"+clickedItem.getLat1()+"id="+clickedItem.getId()+"durata, diff e punto inizio"+clickedItem.getDurata()+clickedItem.getDifficoltà()+clickedItem.getStartpoint());
         Navigation.findNavController(mRecyclerView).navigate(R.id.action_navigation_home_to_postDetailsFragment,bundle);
 
+    }
+
+
+    @Override
+    public void onRefresh() {
+
+        PostController.getPosts(getActivity(),HomeFragment.this,mPostList,mPostAdapter,mRecyclerView,mRequestQueue);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 }
 

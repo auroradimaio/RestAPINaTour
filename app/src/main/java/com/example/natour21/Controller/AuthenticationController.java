@@ -33,6 +33,7 @@ public class AuthenticationController {
     public static String user_username;
     public static String auth;
 
+
     public static void checkLogin(AppCompatActivity activity)
     {
         SharedPreferences sharedPreferences = activity.getSharedPreferences("rememberMe", Context.MODE_PRIVATE);

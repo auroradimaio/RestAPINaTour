@@ -24,7 +24,11 @@ import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
 import com.example.natour21.API.Review.ReviewAPI;
 import com.example.natour21.Adapter.ReviewAdapter;
+import com.example.natour21.Controller.AuthenticationController;
+import com.example.natour21.Controller.DifficultyController;
+import com.example.natour21.Controller.DurationController;
 import com.example.natour21.Controller.PostController;
+import com.example.natour21.Controller.ReviewController;
 import com.example.natour21.Dialog.Dialog;
 import com.example.natour21.Dialog.PostDialog;
 import com.example.natour21.Item.ReviewItem;
@@ -39,6 +43,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
 public class postDetailsFragment extends Fragment implements OnMapReadyCallback, RoutingListener, PostDialog.PostDialogListener {
 
@@ -102,16 +107,17 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
         String difficoltà = bundle.getString("Difficoltà");
         String durata = bundle.getString("Durata");
         String startpoint = bundle.getString("PuntoInizio");
+        String username = bundle.getString("User");
          lat1 = bundle.getDouble("Lat1");
          lon1 = bundle.getDouble("Lon1");
          lon2 = bundle.getDouble("Lon2");
          lat2 = bundle.getDouble("Lat2");
          id = bundle.getInt("Id");
 
-       /* l1= new LatLng(lat1,lon1);
-        l2= new LatLng(lat2,lon2);
+      //  l1= new LatLng(lat1,lon1);
+       // l2= new LatLng(lat2,lon2);
 
-        Log.i("valori latlon=","lat1="+lat1+"lon1"+lon1+"lon2"+lon2+"lat2"+lat2);*/
+     //   Log.i("valori latlon=","lat1="+ AuthenticationController.user_username+username);
 
 
 
@@ -120,7 +126,7 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
         motionLayout = v.findViewById(R.id.motionLay);
 
         valoreDifficoltà = v.findViewById(R.id.valoreDifficoltà_textView);
-        valoreDifficoltà.setText(difficoltà);
+       // valoreDifficoltà.setText(difficoltà);
 
         valorePuntoInizio = v.findViewById(R.id.valorePuntoInizio_textView);
         valorePuntoInizio.setText(startpoint);
@@ -142,12 +148,26 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
 
         reviewButton = v.findViewById(R.id.addReview_button);
 
-        ReviewAPI.getReviewsById(getActivity(),mReviewList,mReviewAdapter,mRecyclerView,mRequestQueue,id,ratingBar,valoreReview_textView,motionLayout);
+        if(username.equals(AuthenticationController.user_username)){
+            reportButton.setEnabled(false);
+            reportButton.setAlpha(.5f);
+            reviewButton.setEnabled(false);
+            reviewButton.setAlpha(.5f);
+        }
+
+        //ReviewAPI.getReviewsById(getActivity(),mReviewList,mReviewAdapter,mRecyclerView,mRequestQueue,id,ratingBar,valoreReview_textView,motionLayout);
+
+        ReviewController.getReviewsById(getActivity(),mReviewList,mReviewAdapter,mRecyclerView,mRequestQueue,id,ratingBar,valoreReview_textView,motionLayout);
+
+        DifficultyController.getDifficultyById(getActivity(),id,valoreDifficoltà,mRequestQueue);
+
+        DurationController.getDurationById(getActivity(),id,valoreDurata,mRequestQueue);
 
         Fragment fragment = new Fragment();
         Bundle bundleDetails = new Bundle();
         bundleDetails.putInt("IdPost",id);
         bundleDetails.putString("TitoloSentiero",titolo);
+        bundleDetails.putString("PostUser",username);
 
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +181,7 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
             @Override
             public void onClick(View view) {
                 openDialog();
+                onPause();
             }
         });
 
@@ -220,6 +241,7 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onPause() {
         super.onPause();
+        Log.i("ONPAUSE","On pause active");
         mMapView.onPause();
     }
 
@@ -240,6 +262,11 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setTitle("Dettagli sentiero");
+        DifficultyController.getDifficultyById(getActivity(),id,valoreDifficoltà,mRequestQueue);
+
+        DurationController.getDurationById(getActivity(),id,valoreDurata,mRequestQueue);
     }
 
     @Override
@@ -334,15 +361,27 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
 
 
     @Override
-    public void applyChanges(String difficulty, String minutes) {
+    public void applyChanges(int difficulty, String duration,int minutes) {
         Toast.makeText(getActivity(),"diff"+difficulty+minutes+id,Toast.LENGTH_SHORT).show();
-        if(difficulty.isEmpty() || minutes.isEmpty()){
-            Toast.makeText(getActivity(),"Inserire tutti i campi",Toast.LENGTH_SHORT).show();
-        }else {
-            PostController.UpdatePost(getActivity(), difficulty, minutes, id);
-            Dialog dialog = new Dialog();
-            dialog.showMessageDialog(getActivity(),"Cambiamenti effettuati con successo",null);
+        if(difficulty==0 && duration.isEmpty()){
+            showMessageDialog(getActivity(),"Inserire campi validi",null );
+        }else if(difficulty!=0 && duration.isEmpty()){
+            DifficultyController.insertDifficulties(getActivity(),difficulty,id);
+            showMessageDialog(getActivity(),"Cambiamenti effettuati con successo",null);
             postDialog.dismiss();
+            onResume();
+        }else if(difficulty==0 && !duration.isEmpty()){
+            DurationController.insertDurations(getActivity(),duration,minutes,id);
+            showMessageDialog(getActivity(),"Cambiamenti effettuati con successo",null);
+            postDialog.dismiss();
+            onResume();
+        }else if(difficulty!=0 && !duration.isEmpty()){
+            DurationController.insertDurations(getActivity(),duration,minutes,id);
+            DifficultyController.insertDifficulties(getActivity(),difficulty,id);
+            showMessageDialog(getActivity(),"Cambiamenti effettuati con successo",null);
+            postDialog.dismiss();
+            onResume();
+
         }
 
     }

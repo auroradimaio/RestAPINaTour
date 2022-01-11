@@ -11,16 +11,23 @@
         android:label="HomePage"
         tools:layout="@layout/fragment_home">
         <action
-                android:id="@+id/action_navigation_home_to_navigation_reports"
-                app:destination="@id/navigation_reports"/>
+            android:id="@+id/action_navigation_home_to_navigation_reports"
+            app:destination="@id/navigation_reports"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_in_right" />
         <action
-                android:id="@+id/action_navigation_home_to_navigation_chat_list"
-                app:destination="@id/navigation_chat_list"/>
+            android:id="@+id/action_navigation_home_to_navigation_chat_list"
+            app:destination="@id/navigation_chat_list"
+            app:enterAnim="@anim/slide_in_right" />
         <action
-                android:id="@+id/action_navigation_home_to_inserimentoItinerario"
-                app:destination="@id/inserimentoItinerario"/>
-        <action android:id="@+id/action_navigation_home_to_postDetailsFragment"
-                app:destination="@id/postDetailsFragment"/>
+            android:id="@+id/action_navigation_home_to_inserimentoItinerario"
+            app:destination="@id/inserimentoItinerario"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_navigation_home_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment"
+            app:enterAnim="@anim/slide_in_right" />
     </fragment>
 
     <fragment
@@ -41,8 +48,9 @@
             android:label="Inserisci itinerario"
             tools:layout="@layout/fragment_inserimento_itinerario" >
         <action
-                android:id="@+id/action_inserimentoItinerario_to_navigation_home"
-                app:destination="@id/navigation_home" />
+            android:id="@+id/action_inserimentoItinerario_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/slide_in_left" />
     </fragment>
     
     <fragment
@@ -51,11 +59,13 @@
             android:label="fragment_post_details"
             tools:layout="@layout/fragment_post_details" >
         <action
-                android:id="@+id/action_postDetailsFragment_to_insertReviewFragment"
-                app:destination="@id/insertReviewFragment" />
+            android:id="@+id/action_postDetailsFragment_to_insertReviewFragment"
+            app:destination="@id/insertReviewFragment"
+            app:enterAnim="@anim/slide_in_right" />
         <action
-                android:id="@+id/action_postDetailsFragment_to_reportFragment"
-                app:destination="@id/reportFragment" />
+            android:id="@+id/action_postDetailsFragment_to_reportFragment"
+            app:destination="@id/reportFragment"
+            app:enterAnim="@anim/slide_in_right" />
     </fragment>
     
     <fragment

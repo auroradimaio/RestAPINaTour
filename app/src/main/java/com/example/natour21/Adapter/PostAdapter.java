@@ -62,6 +62,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -82,27 +83,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
         String descrizione = currentItem.getDescrizione();
-        String minuti = currentItem.getMinuti();
         String titolo = currentItem.getTitolo();
+        String username = currentItem.getUsername();
 
 
 
 
-        holder.tvMinuti.setText(minuti);
         holder.tvTitolo.setText(titolo);
         holder.tvDescrizione.setText(descrizione);
-
-
-
-
-
-
-
+        holder.tvUsername.setText(username);
 
 
     }
-
-
 
 
 
@@ -117,9 +109,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         public TextView tvDescrizione;
         public TextView tvTitolo;
-        public TextView tvMinuti;
         public MapView mapView;
         public GoogleMap map;
+        public TextView tvUsername;
 
 
 
@@ -134,8 +126,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             tvDescrizione = itemView.findViewById(R.id.textView_Descrizione);
             tvTitolo = itemView.findViewById(R.id.textView_Titolo);
-            tvMinuti = itemView.findViewById(R.id.textView_Minuti);
             mapView = itemView.findViewById(R.id.mapView2);
+            tvUsername = itemView.findViewById(R.id.textView_NomeUtente);
 
 
 
@@ -197,12 +189,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 getRoutingPath(loc1, loc2);
                 MarkerOptions markerOptions = (new MarkerOptions()).position(loc1);
                 MarkerOptions markerOptions2 = (new MarkerOptions()).position(loc2);
-            /*CameraPosition camPos = new CameraPosition.Builder()
-                    .target(loc1)
-                    .zoom(9)
-                    .build();
-            CameraUpdate camUp = CameraUpdateFactory.newCameraPosition(camPos);
-            map.animateCamera(camUp);*/
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 builder.include(loc1);
                 builder.include(loc2);
@@ -288,6 +274,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
     }
+
 
 
 

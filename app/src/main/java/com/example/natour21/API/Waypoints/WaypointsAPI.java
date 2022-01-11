@@ -17,10 +17,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WaypointsAPI {
 
-    public static void insertWaypoints(Activity activity, double lat1, double lon1, double lat2, double lon2, VolleyCallback volleyCallback){
+    public static void insertWaypoints(Activity activity, double lat1, double lon1, double lat2, double lon2, String accessToken, VolleyCallback volleyCallback){
 
 
         String url = Config.BASE_URL+Config.API+Config.INSERTWAYPOINTS;
@@ -64,6 +66,14 @@ public class WaypointsAPI {
                     return null;
                 }
             }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + accessToken);
+                return params;
+            }
+
         };
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
     }

@@ -12,6 +12,7 @@ import com.example.natour21.R;
 
 public class Dialog {
 
+
     public static void showMessageDialog(Activity activity, String message, View.OnClickListener clickListener) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -36,9 +37,17 @@ public class Dialog {
             });
         }else {
             okButton.setOnClickListener(clickListener);
+
+
         }
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         alertDialog.show();
+
+
+
+
     }
+
+
 
 }

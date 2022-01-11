@@ -37,9 +37,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
         String description = currentItem.getDescription();
         float rating = currentItem.getRating();
+        String username = currentItem.getUsername();
 
         holder.mDescription.setText(description);
         holder.mRatingBar.setRating(rating);
+        holder.mUsername.setText(username);
     }
 
     @Override
@@ -50,11 +52,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     public class ReviewViewHolder extends RecyclerView.ViewHolder {
         public TextView mDescription;
         public RatingBar mRatingBar;
+        public TextView mUsername;
 
         public ReviewViewHolder(@NonNull View itemView) {
             super(itemView);
             mDescription = itemView.findViewById(R.id.reviewDescription_textView);
             mRatingBar = itemView.findViewById(R.id.ratingBar2);
+            mUsername = itemView.findViewById(R.id.username_TextView);
         }
     }
 }

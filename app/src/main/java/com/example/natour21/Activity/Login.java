@@ -32,7 +32,7 @@ import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 public class Login extends AppCompatActivity {
 
     //Facebook
-    CallbackManager callbackFacebook;
+    CallbackManager callbackFacebook = CallbackManager.Factory.create();
     //Google
     GoogleSignInClient googleSignInClient;
 
