@@ -12,7 +12,6 @@ public class Config {
     public static final String CHECK_AUTH = "/user/auth";
     public static final String LOGIN_FACEBOOK = "/user/facebook/login";
     public static final String LOGIN_GOOGLE = "/user/google/login";
-    public static final String REFRESH_TOKEN = "/token/refresh";
     public static final String GET_CHAT_ROOMS = "/chatrooms";
     public static final String GET_MESSAGE_SINGLE_CHAT = "/message/chatroom";
     public static final String SEND_MESSAGE = "/message/send";
@@ -24,5 +23,6 @@ public class Config {
     public static final String GETREVIEWBYID = "/reviews/id?id_post=";
     public static final String INSERTREVIEW="/review/insert";
     public static final String INSERTREPORT="/report/insert";
-
+    public static final String SEND_EMAIL = "/user/sendemail";
+    public static final String CHANGE_PASSWORD = "/user/update";
 }

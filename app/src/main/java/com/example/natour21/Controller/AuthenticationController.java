@@ -9,17 +9,16 @@ import android.net.ConnectivityManager;
 import android.util.Base64;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.natour21.Activity.*;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.example.natour21.API.User.UserAPI;
-import com.example.natour21.Activity.Login;
-import com.example.natour21.Activity.RegistrationServiceHandler;
-import com.example.natour21.Activity.homePage;
 import com.example.natour21.Enumeration.Auth;
 import com.example.natour21.Pusher.PusherManager;
 import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
+import com.pusher.client.channel.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -119,7 +118,6 @@ public class AuthenticationController {
                                                         }
                                                         progressDialog.dismiss();
                                                         activity.startActivity(new Intent(activity, homePage.class));
-                                                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                                     } else if (jsonObject.getString("status").equals("FAILED")) {
                                                         progressDialog.dismiss();
                                                         showMessageDialog(activity, jsonObject.getString("result"), null);
@@ -199,7 +197,7 @@ public class AuthenticationController {
                                             editor.apply();
                                             progressDialog.dismiss();
                                             activity.startActivity(new Intent(activity, homePage.class));
-                                            activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                                            
                                         } else if (jsonObject.getString("status").equals("FAILED")) {
                                             progressDialog.dismiss();
                                             showMessageDialog(activity, jsonObject.getString("result"), null);
@@ -221,7 +219,7 @@ public class AuthenticationController {
                             intent.putExtra("email", email);
                             intent.putExtra("isFacebook", true);
                             activity.startActivity(intent);
-                            activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                            
                         }
                     }
                     else if(jsonObject.getString("status").equals("FAILED"))
@@ -273,7 +271,7 @@ public class AuthenticationController {
                                             editor.apply();
                                             progressDialog.dismiss();
                                             activity.startActivity(new Intent(activity, homePage.class));
-                                            activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                                            
                                         } else if (jsonObject.getString("status").equals("FAILED")) {
                                             progressDialog.dismiss();
                                             showMessageDialog(activity, jsonObject.getString("result"), null);
@@ -295,7 +293,7 @@ public class AuthenticationController {
                             intent.putExtra("email", email);
                             intent.putExtra("isFacebook", false);
                             activity.startActivity(intent);
-                            activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                            
                         }
                     }
                     else if(jsonObject.getString("status").equals("FAILED"))
@@ -338,7 +336,6 @@ public class AuthenticationController {
                                                     @Override
                                                     public void onClick(View view) {
                                                         activity.startActivity(new Intent(activity, Login.class));
-                                                        activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                                                     }
                                                 });
 
@@ -359,7 +356,6 @@ public class AuthenticationController {
                                             @Override
                                             public void onClick(View view) {
                                                 activity.startActivity(new Intent(activity, Login.class));
-                                                activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                                             }
                                         });
                                     }
@@ -427,7 +423,7 @@ public class AuthenticationController {
                                         editor.apply();
                                         progressDialog.dismiss();
                                         activity.startActivity(new Intent(activity, homePage.class));
-                                        activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                                        
                                     } else if (jsonObject.getString("status").equals("FAILED")) {
                                         progressDialog.dismiss();
                                         showMessageDialog(activity, jsonObject.getString("result"), null);
@@ -498,7 +494,7 @@ public class AuthenticationController {
                                                 editor.apply();
                                                 progressDialog.dismiss();
                                                 activity.startActivity(new Intent(activity, homePage.class));
-                                                activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                                                
                                             } else if (jsonObject.getString("status").equals("FAILED")) {
                                                 progressDialog.dismiss();
                                                 showMessageDialog(activity, jsonObject.getString("result"), null);
@@ -545,7 +541,7 @@ public class AuthenticationController {
         if(!isTokenExpired)
         {
             activity.startActivity(new Intent(activity, Login.class));
-            activity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+            
             if(auth.equals(Auth.FACEBOOK.toString()))
             {
                 LoginManager.getInstance().logOut();
@@ -564,9 +560,116 @@ public class AuthenticationController {
                 @Override
                 public void onClick(View view) {
                     activity.startActivity(new Intent(activity, Login.class));
-                    activity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+                    
                 }
             });
+        }
+    }
+
+    public static void changePassword(Activity activity, String username, String password, String confirmPassword) {
+        if (password.length() >= 6) {
+            if (password.equals(confirmPassword)) {
+
+                UserAPI.changePassword(activity,username,password, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if(jsonObject.getString("status").equals("OK"))
+                            {
+                                showMessageDialog(activity, "Informazioni aggiornate correttamente", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        activity.startActivity(new Intent(activity,Login.class));
+                                    }
+                                });
+                            }else if(jsonObject.getString("status").equals("FAILED"))
+                            {
+                                showMessageDialog(activity, "Reimpostazione password fallita", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        activity.startActivity(new Intent(activity,Login.class));
+                                    }
+                                });
+                            }
+                        } catch (JSONException e) {
+                            showMessageDialog(activity, "Reimpostazione password fallita", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    activity.startActivity(new Intent(activity,Login.class));
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onError(String response) {
+                        showMessageDialog(activity, "Reimpostazione password fallita", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                activity.startActivity(new Intent(activity,Login.class));
+                            }
+                        });
+                    }
+                });
+
+            } else {
+                showMessageDialog(activity, "Le password non corrispondono", null);
+            }
+        } else {
+            showMessageDialog(activity, "La password deve essere composta da almeno 6 caratteri", null);
+        }
+    }
+
+    public static void openVerifyOTP(Activity activity, String email) {
+
+        if(isEmailValid(email) && email.length() > 0) {
+            UserAPI.sendEmail(activity,email, new VolleyCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if(jsonObject.getString("status").equals("OK") && jsonObject.getJSONObject("result").getString("email").equals(email))
+                        {
+                            Intent intent = new Intent(activity, VerifyOTP.class);
+                            intent.putExtra("code", jsonObject.getJSONObject("result").getString("code"));
+                            intent.putExtra("email", jsonObject.getJSONObject("result").getString("email"));
+                            intent.putExtra("username", jsonObject.getJSONObject("result").getString("username"));
+                            activity.startActivity(intent);
+                        }else if(jsonObject.getString("status").equals("FAILED"))
+                        {
+                            showMessageDialog(activity, email + " non è associata a nessun account", null);
+                        }
+                    } catch (JSONException e) {
+                        showMessageDialog(activity,"Impossibile inviare email di recupero, riprovare più tardi", null);
+                    }
+                }
+
+                @Override
+                public void onError(String response) {
+                    showMessageDialog(activity,"Impossibile inviare email di recupero, riprovare più tardi", null);
+                }
+            });
+        }else
+        {
+            showMessageDialog(activity,"Inserire un indirizzo email valido", null);
+        }
+    }
+
+    public static void openChangePassword(Activity activity, String username, String code, String userCode) {
+        if(userCode.length() > 0){
+            if(userCode.equals(code))
+            {
+                Intent intent = new Intent(activity, ChangePassword.class);
+                intent.putExtra("username", username);
+                activity.startActivity(intent);
+            }else
+            {
+                showMessageDialog(activity,"Codice invalido", null);
+            }
+        }else
+        {
+            showMessageDialog(activity,"Inserire il codice per continuare", null);
         }
     }
 

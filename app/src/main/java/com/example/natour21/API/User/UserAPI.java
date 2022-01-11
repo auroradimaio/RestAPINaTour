@@ -241,11 +241,11 @@ public class UserAPI {
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
     }
 
-    public static void refreshToken(Activity activity, String refreshToken, VolleyCallback volleyCallback) {
+    public static void sendEmail(Activity activity, String email, VolleyCallback volleyCallback) {
 
-        String url = Config.BASE_URL + Config.API + Config.REFRESH_TOKEN;
+        String url = Config.BASE_URL + Config.API + Config.SEND_EMAIL;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 volleyCallback.onSuccess(response);
@@ -255,16 +255,39 @@ public class UserAPI {
                 volleyCallback.onError(error.getMessage());
             }
         }) {
-
             @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + refreshToken);
-                return params;
+            public Map<String, String> getParams() {
+                HashMap<String, String> param = new HashMap<>();
+                param.put("email", email);
+                return param;
             }
         };
 
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
     }
 
+    public static void changePassword(Activity activity, String username, String password, VolleyCallback volleyCallback) {
+        String url = Config.BASE_URL + Config.API + Config.CHANGE_PASSWORD;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                volleyCallback.onSuccess(response);
+            }}, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                volleyCallback.onError(error.getMessage());
+            }
+        }) {
+            @Override
+            public Map<String, String> getParams() {
+                HashMap<String, String> param = new HashMap<>();
+                param.put("username", username);
+                param.put("password", password);
+                return param;
+            }
+        };
+
+        VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
+    }
 }

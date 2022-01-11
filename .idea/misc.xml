@@ -13,10 +13,15 @@
         <entry key="app/src/main/res/drawable/ic_report.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/drawable/reciever_message.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/drawable/user_icon_background.xml" value="0.21145833333333333" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.23020833333333332" />
+        <entry key="app/src/main/res/layout/activity_forget_password.xml" value="0.23020833333333332" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/activity_send_new_message.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/activity_single_chat.xml" value="0.1953125" />
         <entry key="app/src/main/res/layout/activity_single_report.xml" value="0.29846014492753625" />
+        <entry key="app/src/main/res/layout/activity_verify_otp.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/customdialog.xml" value="0.1953125" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_inserimento_itinerario.xml" value="0.18" />

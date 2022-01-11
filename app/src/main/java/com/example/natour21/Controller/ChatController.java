@@ -72,7 +72,6 @@ public class ChatController {
         Intent intent = new Intent(activity, SingleChat.class);
         intent.putExtra("username", username);
         activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
     public static void updateSingleChat(String from, String content, long time)
@@ -157,7 +156,6 @@ public class ChatController {
 
     public static void openNewMessage(Activity activity) {
         activity.startActivity(new Intent(activity, SendMessage.class));
-        activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
     public static void sendNewMessage(Activity activity, String username, String messageContent) {

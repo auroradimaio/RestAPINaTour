@@ -2,10 +2,12 @@ package com.example.natour21.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -76,6 +78,14 @@ public class Login extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.btnLogin);
         Button btnRegister = findViewById(R.id.btnRegister);
         CheckBox rememberMe = findViewById(R.id.rememberMe);
+        TextView forgetPassword = findViewById(R.id.passwordRecovery);
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this, ForgetPassword.class));
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +98,6 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Login.this, Register.class));
-                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             }
         });
 

@@ -33,5 +33,6 @@
 	<string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 	<string name="swipe_left_for_register">REGISTRATI</string>
 	<string name="swipe_right_for_login">ACCEDI</string>
+	<string name="title_activity_verify_code">VerifyCode</string>
 
 </resources>
