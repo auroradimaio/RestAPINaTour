@@ -51,7 +51,7 @@ dependencies {
     //Dependency API
     implementation 'com.android.volley:volley:1.2.1'
     //Dependency Facebook
-    implementation group: 'com.facebook.android', name: 'facebook-android-sdk', version: '12.2.0'
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
     //Dependency Google
     implementation 'com.google.android.gms:play-services-auth:20.0.0'
     //Dependency Chat

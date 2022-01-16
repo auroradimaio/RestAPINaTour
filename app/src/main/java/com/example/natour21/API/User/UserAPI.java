@@ -44,7 +44,7 @@ public class UserAPI {
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
     }
 
-    public static void loginFacebook(Activity activity, String email, VolleyCallback volleyCallback) {
+    public static void loginFacebook(Activity activity, String email, String id, VolleyCallback volleyCallback) {
 
         String url = Config.BASE_URL + Config.API + Config.LOGIN_FACEBOOK;
 
@@ -62,6 +62,7 @@ public class UserAPI {
             public Map<String, String> getParams() {
                 HashMap<String, String> param = new HashMap<>();
                 param.put("email", email);
+                param.put("id", id);
                 return param;
             }
         };
@@ -136,11 +137,12 @@ public class UserAPI {
         VolleySingleton.getInstance(activity).addToRequestQueue(stringRequest);
     }
 
-    public static void registerFACEBOOK(Activity activity, String email, String username, VolleyCallback volleyCallback) {
+    public static void registerFACEBOOK(Activity activity, String id, String email, String username, VolleyCallback volleyCallback) {
         String url = Config.BASE_URL + Config.API + Config.REGISTER_FACEBOOK;
 
         JSONObject jsonBody = new JSONObject();
         try {
+            jsonBody.put("user_id", id);
             jsonBody.put("username", username);
             jsonBody.put("email", email);
         } catch (JSONException jsonException) {

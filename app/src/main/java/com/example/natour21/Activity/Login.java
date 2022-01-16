@@ -127,8 +127,6 @@ public class Login extends AppCompatActivity {
 
     private void LoginWithFacebook() {
 
-        callbackFacebook = CallbackManager.Factory.create();
-
         LoginManager.getInstance().registerCallback(callbackFacebook,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -141,7 +139,8 @@ public class Login extends AppCompatActivity {
                                     public void onCompleted(JSONObject object, GraphResponse response) {
                                         try {
                                             String email = response.getJSONObject().getString("email");
-                                            AuthenticationController.loginWithFacebook(Login.this, email);
+                                            String id = response.getJSONObject().getString("id");
+                                            AuthenticationController.loginWithFacebook(Login.this, email, id);
 
                                         } catch (JSONException e) {
                                             showMessageDialog(Login.this, "Errore durante l'autenticazione", null);

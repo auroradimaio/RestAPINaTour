@@ -17,6 +17,7 @@ public class RegistrationServiceHandler extends AppCompatActivity {
         setContentView(R.layout.activity_registration_handler);
 
         String email = getIntent().getExtras().getString("email");
+        String id = getIntent().getExtras().getString("id");
         boolean isFacebook = getIntent().getExtras().getBoolean("isFacebook");
 
 
@@ -29,7 +30,7 @@ public class RegistrationServiceHandler extends AppCompatActivity {
             public void onClick(View view) {
                 if(isFacebook)
                 {
-                    AuthenticationController.registerFACEBOOK(RegistrationServiceHandler.this, email, username.getText().toString());
+                    AuthenticationController.registerFACEBOOK(RegistrationServiceHandler.this,id, email, username.getText().toString());
                 }
                 else
                 {

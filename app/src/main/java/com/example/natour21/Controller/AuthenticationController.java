@@ -164,9 +164,9 @@ public class AuthenticationController {
         }
     }
 
-    public static void loginWithFacebook(AppCompatActivity activity, String email)
+    public static void loginWithFacebook(AppCompatActivity activity, String email, String id)
     {
-        UserAPI.loginFacebook(activity,email, new VolleyCallback() {
+        UserAPI.loginFacebook(activity,email,id, new VolleyCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -179,7 +179,7 @@ public class AuthenticationController {
                             progressDialog.setMessage("Accesso in corso...");
                             progressDialog.show();
                             progressDialog.setCancelable(false);
-                            UserAPI.login(activity, jsonObject.getString("data"), email + jsonObject.getString("data") + "FACEBOOK_AUTH", new VolleyCallback() {
+                            UserAPI.login(activity, jsonObject.getString("data"), id, new VolleyCallback() {
                                 @Override
                                 public void onSuccess(String response) {
                                     try {
@@ -217,6 +217,7 @@ public class AuthenticationController {
                         {
                             Intent intent = new Intent(activity, RegistrationServiceHandler.class);
                             intent.putExtra("email", email);
+                            intent.putExtra("id", id);
                             intent.putExtra("isFacebook", true);
                             activity.startActivity(intent);
                             
@@ -386,10 +387,10 @@ public class AuthenticationController {
         }
     }
 
-    public static void registerFACEBOOK(Activity activity, String email, String username) {
+    public static void registerFACEBOOK(Activity activity, String id, String email, String username) {
 
         if(isUsernameValid(username)) {
-            UserAPI.registerFACEBOOK(activity, email, username , new VolleyCallback() {
+            UserAPI.registerFACEBOOK(activity, id, email, username , new VolleyCallback() {
             @Override
             public void onSuccess(String response) {
                 JSONObject jsonObject = null;
@@ -404,7 +405,7 @@ public class AuthenticationController {
                         progressDialog.setCancelable(false);
                         UserAPI.login(activity,
                                 jsonObject.getJSONObject("result").getString("username"),
-                                email + jsonObject.getJSONObject("result").getString("username") + "FACEBOOK_AUTH", new VolleyCallback() {
+                                id, new VolleyCallback() {
                             @Override
                             public void onSuccess(String response) {
 
