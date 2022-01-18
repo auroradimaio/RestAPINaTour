@@ -83,7 +83,7 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_post_details, container, false);
 
         mRecyclerView = (RecyclerView)v.findViewById(R.id.dettagli_RecyclerView);
@@ -114,10 +114,6 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
          lat2 = bundle.getDouble("Lat2");
          id = bundle.getInt("Id");
 
-      //  l1= new LatLng(lat1,lon1);
-       // l2= new LatLng(lat2,lon2);
-
-     //   Log.i("valori latlon=","lat1="+ AuthenticationController.user_username+username);
 
 
 
@@ -126,7 +122,7 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
         motionLayout = v.findViewById(R.id.motionLay);
 
         valoreDifficoltà = v.findViewById(R.id.valoreDifficoltà_textView);
-       // valoreDifficoltà.setText(difficoltà);
+
 
         valorePuntoInizio = v.findViewById(R.id.valorePuntoInizio_textView);
         valorePuntoInizio.setText(startpoint);
@@ -155,7 +151,7 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
             reviewButton.setAlpha(.5f);
         }
 
-        //ReviewAPI.getReviewsById(getActivity(),mReviewList,mReviewAdapter,mRecyclerView,mRequestQueue,id,ratingBar,valoreReview_textView,motionLayout);
+
 
         ReviewController.getReviewsById(getActivity(),mReviewList,mReviewAdapter,mRecyclerView,mRequestQueue,id,ratingBar,valoreReview_textView,motionLayout);
 
@@ -226,7 +222,6 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
         l1= new LatLng(lat1,lon1);
         l2= new LatLng(lat2,lon2);
 
-        Log.i("valori latlon=","lat1="+lat1+"lon1"+lon1+"lon2"+lon2+"lat2"+lat2);
         getRoutingPath(l1,l2);
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(l1);

@@ -190,7 +190,6 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
         btnIns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("MINUTI","Minuti="+min);
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("*/*");

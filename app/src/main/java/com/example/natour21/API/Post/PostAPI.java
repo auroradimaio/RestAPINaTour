@@ -74,7 +74,7 @@ public class PostAPI {
 
 
                         mPostList.add(new PostItem(description, title, lat1, lat2, lon1, lon2,id,startpoint,username));
-                        Log.i("ELEMENTI","elem"+mPostList.toString());
+
                     }
 
 
