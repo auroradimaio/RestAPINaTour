@@ -27,25 +27,33 @@ public class ReportController {
     public static boolean onReportList = false;
     private static List<Report> reports = new ArrayList<>();
 
-    public static void InsertReport(Activity activity, String title, String description, String sender, int time, int id_post){
+    public static void InsertReport(Activity activity, String title, String description, int id_post, String postUser){
 
-        ReportAPI.InsertReport(activity, title, description, id_post, sender, time,AuthenticationController.user_username, new VolleyCallback() {
+        ReportAPI.InsertReport(activity, title, description, id_post ,AuthenticationController.user_username,postUser, AuthenticationController.accessToken, new VolleyCallback() {
             @Override
             public void onSuccess(String response) {
                 try{
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("status").equals("OK")) {
-                        Toast.makeText(activity,"OK",Toast.LENGTH_SHORT).show();
-                    }else if(jsonObject.getString("status").equals("FAILED")){
-                        Toast.makeText(activity,"FAILED",Toast.LENGTH_SHORT).show();
+                        showMessageDialog(activity,"Segnalazione inserita con successo",null);
+                    }
+                    else if(jsonObject.getString("status").equals("FAILED")){
+                        showMessageDialog(activity,"Hai già segnalato questo post",null);
+
+
+                    }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
+                    {
+                        AuthenticationController.logout(activity, true);
                     }
                 }catch (JSONException jsonException){
-                    Toast.makeText(activity,jsonException.toString(),Toast.LENGTH_SHORT).show();
+                    showMessageDialog(activity,"Hai già segnalato questo post",null);
+
                 }
             }
 
             @Override
             public void onError(String response) {
+                showMessageDialog(activity,"Hai già segnalato questo post",null);
 
             }
         });

@@ -34,6 +34,8 @@ public class homePage extends AppCompatActivity {
             AuthenticationController.logout(this, false);
             return true;
         });
+        
+
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);

@@ -1,11 +1,13 @@
 package com.example.natour21.Fragment;
 
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -25,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 
@@ -35,6 +38,8 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.example.natour21.Controller.DifficultyController;
+import com.example.natour21.Controller.DurationController;
 import com.example.natour21.Controller.PostController;
 import com.example.natour21.Controller.WaypointsController;
 import com.example.natour21.Dialog.Dialog;
@@ -56,6 +61,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +91,8 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
     EditText title,description,startPoint,time;
     Spinner time_spinner;
 
+    TimePickerDialog timePickerDialog;
+    int min;
 
 
 
@@ -112,7 +120,8 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_inserimento_itinerario, container, false);
+        View v = inflater.inflate(R.layout.fragment_inserimento_itinerario, container, false);
+
 
 
 
@@ -134,26 +143,50 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
                         }
                         else
                         {
-                            Toast.makeText(getActivity(),"no",Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 }
         );
 
-        time = view.findViewById(R.id.time_editText);
-        title= view.findViewById(R.id.title_editText);
-        description = view.findViewById(R.id.description_editText);
-        startPoint = view.findViewById(R.id.startPoint_editText);
+        time = v.findViewById(R.id.time_editText);
+        title= v.findViewById(R.id.title_editText);
+        description = v.findViewById(R.id.description_editText);
+        startPoint = v.findViewById(R.id.startPoint_editText);
 
-        time_spinner = (Spinner) view.findViewById(R.id.difficulty_spinner);
-        String[] items = new String[]{"Facile", "Media", "Difficile"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
+        time_spinner = (Spinner) v.findViewById(R.id.difficulty_spinner);
+
+        Integer[] items = new Integer[]{1,2,3,4,5};
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
         time_spinner.setAdapter(adapter);
 
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timePickerDialog = new TimePickerDialog(getActivity(), R.style.TimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hour, int minutes) {
+
+                        time.setText(String.format("%02d:%02d",hour,minutes));
+                        min=hour*60+minutes;
+
+
+                    }
+                },0,0,true);
+
+                timePickerDialog.show();
 
 
 
-        btnIns = (Button) view.findViewById(R.id.btnInsPath);
+            }
+
+        });
+
+
+
+
+
+        btnIns = (Button) v.findViewById(R.id.btnInsPath);
         btnIns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,34 +198,36 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
 
 
 
+
             }
         });
 
 
-        btnPubblica = (Button)view.findViewById(R.id.btnPubblica);
+        btnPubblica = (Button)v.findViewById(R.id.btnPubblica);
         btnPubblica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
 
                 if((title.getText().toString().isEmpty() || description.getText().toString().isEmpty() || time.getText().toString().isEmpty() || time_spinner.getSelectedItem().toString()
                 ==null || startPoint.getText().toString().isEmpty()) || (lat1 == 0 || lat2 == 0 || lng1 == 0 || lng2 == 0)){
                     Toast.makeText(getActivity(),"Inserire tutti i campi/Sentiero non valido",Toast.LENGTH_SHORT).show();
                 }else{
 
-                    PostController.InsertPost(getActivity(), title.getText().toString(), description.getText().toString(), time.getText().toString()
-                            , time_spinner.getSelectedItem().toString(), startPoint.getText().toString());
+                    PostController.InsertPost(getActivity(), title.getText().toString(), description.getText().toString(), startPoint.getText().toString());
+
+
 
                     Dialog dialog = new Dialog();
 
-                    dialog.showMessageDialog(getActivity(), "Sentiero inserito corretamente", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            WaypointsController.insertWaypoints(getActivity(),lat1,lng1,lat2,lng2);
 
-                        }
-                    });
 
-                    Toast.makeText(getActivity(), " valido", Toast.LENGTH_SHORT).show();
+                    dialog.showMessageDialog(getActivity(),"Sentiero inserito correttamente",null);
+                    WaypointsController.insertWaypoints(getActivity(),lat1,lng1,lat2,lng2);
+                    DifficultyController.insertDifficulty(getActivity(), (Integer) time_spinner.getSelectedItem());
+                    DurationController.insertDuration(getActivity(),time.getText().toString(),min);
+
                 }
 
                 }
@@ -207,13 +242,13 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(Constants.MAPVIEW_BUNDLE_KEY);
         }
-        mMapView = (MapView) view.findViewById(R.id.mapView);
+        mMapView = (MapView) v.findViewById(R.id.mapView);
         mMapView.onCreate(mapViewBundle);
 
         mMapView.getMapAsync(this);
 
 
-        return view;
+        return v;
     }
 
 
@@ -239,6 +274,7 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
         mMapView.onSaveInstanceState(mapViewBundle);
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -258,6 +294,8 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
         super.onStop();
         mMapView.onStop();
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap gmap) {
@@ -420,7 +458,6 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
 
 
 
-        Toast.makeText(getActivity(),pathOz.getPath(),Toast.LENGTH_LONG).show();
 
         ArrayList<LatLng> points = new ArrayList<>();
 
@@ -436,14 +473,13 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
         }
         catch (IOException  | XmlPullParserException e ){
             e.printStackTrace();
-            Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_SHORT).show();
+
         }
 
         if(parsedGpx==null){
-            Toast.makeText(getActivity(),"parsedgpxnullo",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"gpx nullo",Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(getActivity(), "parsedgpxfunziona", Toast.LENGTH_SHORT).show();
             List<Track> tracks = parsedGpx.getTracks();
             for (int i = 0; i < tracks.size(); i++) {
                 Track track = tracks.get(i);

@@ -1,12 +1,16 @@
 package com.example.natour21.Item;
 
+import com.pusher.client.channel.User;
+
 public class ReviewItem {
     private float Rating;
     private String Description;
+    private String Username;
 
-    public ReviewItem(float rating, String description){
+    public ReviewItem(float rating, String description, String username){
         Rating=rating;
         Description=description;
+        Username = username;
     }
 
     public float getRating(){
@@ -16,4 +20,6 @@ public class ReviewItem {
     public String getDescription(){
         return Description;
     }
+
+    public String getUsername(){return Username;}
 }

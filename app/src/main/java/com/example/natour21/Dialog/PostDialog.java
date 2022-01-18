@@ -2,8 +2,11 @@ package com.example.natour21.Dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +28,8 @@ public class PostDialog extends AppCompatDialogFragment {
     private Spinner spinnerDifficoltà;
     private Button confirmButton, cancelButton;
     private PostDialogListener listener;
+    TimePickerDialog timePickerDialog;
+    int min;
 
     @NonNull
     @Override
@@ -36,8 +42,8 @@ public class PostDialog extends AppCompatDialogFragment {
 
         editTextDurata = view.findViewById(R.id.editTextTime);
         spinnerDifficoltà = (Spinner) view.findViewById(R.id.spinner);
-        String[] items = new String[]{"Facile", "Media", "Difficile"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
+        Integer[] items = new Integer[]{0,1,2,3,4,5};
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
         spinnerDifficoltà.setAdapter(adapter);
 
         confirmButton = view.findViewById(R.id.conferma_buttonDialog);
@@ -46,16 +52,41 @@ public class PostDialog extends AppCompatDialogFragment {
 
 
 
+        editTextDurata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timePickerDialog = new TimePickerDialog(getActivity(), R.style.TimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hour, int minutes) {
 
+                        editTextDurata.setText(String.format("%02d:%02d",hour,minutes));
+                        min=hour*60+minutes;
+                    }
+                },0,0,true);
+
+                timePickerDialog.show();
+
+            }
+        });
+
+
+
+
+
+        view.setBackgroundResource(android.R.color.transparent);
         builder.setView(view)
                 .setTitle(Html.fromHtml("<font color='#BC6C25'>Modifica durata e/o difficoltà</font>"));
+
+
+
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String difficulty = spinnerDifficoltà.getSelectedItem().toString();
-                String minutes = editTextDurata.getText().toString();
-                listener.applyChanges(difficulty,minutes);
+                int difficulty = (Integer) spinnerDifficoltà.getSelectedItem();
+                String duration = editTextDurata.getText().toString();
+                int minutes = min;
+                listener.applyChanges(difficulty,duration,minutes);
 
 
 
@@ -87,7 +118,7 @@ public class PostDialog extends AppCompatDialogFragment {
     }
 
     public interface PostDialogListener{
-        void applyChanges(String difficulty, String minutes);
+        void applyChanges(int difficulty, String duration,int minutes);
         void close();
     }
 }

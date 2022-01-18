@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_round_corner"
     >
 
     <TextView
@@ -36,8 +37,7 @@
         android:layout_width="61dp"
         android:layout_height="46dp"
         android:layout_marginBottom="32dp"
-        android:ems="10"
-        android:inputType="time"
+        android:focusable="false"
         app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.291"

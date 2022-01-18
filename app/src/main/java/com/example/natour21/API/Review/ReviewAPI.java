@@ -35,9 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ReviewAPI {
+public class  ReviewAPI {
 
-    public static void getReviewsById(Activity activity, ArrayList<ReviewItem> mReviewList, ReviewAdapter mReviewAdapter, RecyclerView mRecyclerView, RequestQueue requestQueue, int id, RatingBar ratingBar, TextView textView, MotionLayout motionLayout){
+    public static void getReviewsById(Activity activity, ArrayList<ReviewItem> mReviewList, ReviewAdapter mReviewAdapter, RecyclerView mRecyclerView, RequestQueue requestQueue, int id, RatingBar ratingBar, TextView textView, MotionLayout motionLayout, String accessToken){
         String url = Config.BASE_URL+Config.API+Config.GETREVIEWBYID+id;
         final ReviewAdapter[] mp = {mReviewAdapter};
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -48,6 +48,7 @@ public class ReviewAPI {
                     float totalvalue=0;
                     int i;
                     JSONArray jsonArray = response.getJSONArray("result");
+                   
 
                     if(jsonArray.length()==0){
                        motionLayout.getTransition(R.id.Transazione).setEnable(false);
@@ -59,32 +60,29 @@ public class ReviewAPI {
 
                         String description = res.getString("description");
                         float value = (float) res.getDouble("value");
+                        String username = res.getString("username");
 
 
-                        //Log.i("VALORE","valore recensione"+value);
-
-                        Log.i("VALORE","valore recensione"+value);
-                        mReviewList.add(new ReviewItem(value, description));
+                        mReviewList.add(new ReviewItem(value, description,username));
                         totalvalue=totalvalue+value;
 
                     }
-                    Log.i("VALORE","valore recensione totale"+totalvalue/i);
+
                     ratingBar.setRating(totalvalue/i);
-                    textView.setText(String.valueOf(totalvalue/i));
+                    textView.setText(String.format("%.1f",totalvalue/i));
 
 
                     mp[0] = new ReviewAdapter(activity, mReviewList);
                     mRecyclerView.setAdapter(mp[0]);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(activity,e.toString(),Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(activity,error.toString(),Toast.LENGTH_LONG).show();
+
             }
         }){
             @Override
@@ -95,9 +93,10 @@ public class ReviewAPI {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + AuthenticationController.accessToken);
+                params.put("Authorization", "Bearer " + accessToken);
                 return params;
             }
+
         };
 
         requestQueue.add(request);
@@ -105,7 +104,7 @@ public class ReviewAPI {
     }
 
 
-    public static void insertReview(Activity activity, String description, double value, int id_post, VolleyCallback volleyCallback){
+    public static void insertReview(Activity activity, String description, double value, int id_post,String username,String accessToken, VolleyCallback volleyCallback){
 
         String url = Config.BASE_URL+Config.API+Config.INSERTREVIEW;
         JSONObject jsonBody = new JSONObject();
@@ -113,6 +112,7 @@ public class ReviewAPI {
             jsonBody.put("description",description);
             jsonBody.put("value",value);
             jsonBody.put("id_post",id_post);
+            jsonBody.put("username",username);
         }catch (JSONException jsonException){
             jsonException.printStackTrace();
         }
@@ -148,7 +148,7 @@ public class ReviewAPI {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + AuthenticationController.accessToken);
+                params.put("Authorization", "Bearer " + accessToken);
                 return params;
             }
         };
