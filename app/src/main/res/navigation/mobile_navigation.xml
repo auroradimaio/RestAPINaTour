@@ -68,6 +68,10 @@
             android:id="@+id/reportFragment"
             android:name="com.example.natour21.Fragment.NewReportFragment"
             android:label="fragment_report"
-            tools:layout="@layout/fragment_new_report" />
+            tools:layout="@layout/fragment_new_report" >
+        <action
+            android:id="@+id/action_reportFragment_to_navigation_reports"
+            app:destination="@id/navigation_reports" />
+    </fragment>
     
 </navigation>

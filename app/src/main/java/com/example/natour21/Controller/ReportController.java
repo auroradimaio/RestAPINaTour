@@ -1,15 +1,22 @@
 package com.example.natour21.Controller;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Html;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.Navigation;
+
 import com.example.natour21.API.Report.ReportAPI;
 import com.example.natour21.Activity.SingleReport;
 import com.example.natour21.Item.Report;
 import com.example.natour21.Fragment.ReportsFragment;
+import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +34,7 @@ public class ReportController {
     public static boolean onReportList = false;
     private static List<Report> reports = new ArrayList<>();
 
-    public static void InsertReport(Activity activity, String title, String description, int id_post, String postUser){
+    public static void InsertReport(Activity activity, String title, String description, int id_post, String postUser, View view){
 
         ReportAPI.InsertReport(activity, title, description, id_post ,AuthenticationController.user_username,postUser, AuthenticationController.accessToken, new VolleyCallback() {
             @Override
@@ -35,7 +42,23 @@ public class ReportController {
                 try{
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("status").equals("OK")) {
-                        showMessageDialog(activity,"Segnalazione inserita con successo",null);
+                        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                        alertDialog.setTitle(Html.fromHtml("<font color='#BC6C25'>Segnalazione inserita con successo!</font>"));
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                        Navigation.findNavController(view).navigate(R.id.action_reportFragment_to_navigation_reports);
+                                    }
+                                });
+                        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialogInterface) {
+                                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.green));
+                            }
+                        });
+                        alertDialog.show();
                     }
                     else if(jsonObject.getString("status").equals("FAILED")){
                         showMessageDialog(activity,"Hai già segnalato questo post",null);

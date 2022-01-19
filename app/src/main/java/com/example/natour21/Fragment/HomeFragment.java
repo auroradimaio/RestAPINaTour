@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.natour21.Utils.ImagePicker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeFragment extends Fragment implements PostAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -54,6 +56,7 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
     public static PostAdapter mPostAdapter;
     public static ArrayList<PostItem> mPostList;
     public static RequestQueue mRequestQueue;
+    ImageView userImage;
 
 
     @Override
@@ -94,7 +97,8 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
 
         mPostList = new ArrayList<>();
 
-
+        userImage = view.findViewById(R.id.imgViewUser);
+        userImage.setImageResource(ImagePicker.getImage(AuthenticationController.user_username));
 
 
         mRequestQueue = Volley.newRequestQueue(getActivity());

@@ -3,7 +3,7 @@ package com.example.natour21.API;
 public class Config {
 
     //public static final String BASE_URL = "http://ec2-3-12-83-96.us-east-2.compute.amazonaws.com:8080";
-    public static final String BASE_URL = "http://192.168.1.9:8080";
+    public static final String BASE_URL = "http://192.168.1.10:8080";
     public static final String API = "/api";
     public static final String LOGIN = "/login";
     public static final String REGISTER_NATOUR21 = "/user/register/natour21";

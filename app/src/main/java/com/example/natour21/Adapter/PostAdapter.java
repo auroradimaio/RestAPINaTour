@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +20,10 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.Item.PostItem;
 import com.example.natour21.R;
+import com.example.natour21.Utils.ImagePicker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -92,6 +95,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.tvTitolo.setText(titolo);
         holder.tvDescrizione.setText(descrizione);
         holder.tvUsername.setText(username);
+        holder.userImage.setImageResource(ImagePicker.getImage(username));
 
 
     }
@@ -112,6 +116,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public MapView mapView;
         public GoogleMap map;
         public TextView tvUsername;
+        public ImageView userImage;
 
 
 
@@ -128,6 +133,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             tvTitolo = itemView.findViewById(R.id.textView_Titolo);
             mapView = itemView.findViewById(R.id.mapView2);
             tvUsername = itemView.findViewById(R.id.textView_NomeUtente);
+            userImage = itemView.findViewById(R.id.imageUser);
 
 
 

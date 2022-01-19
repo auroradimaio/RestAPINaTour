@@ -1,7 +1,9 @@
 package com.example.natour21.Fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -18,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,6 +126,25 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
         View v = inflater.inflate(R.layout.fragment_inserimento_itinerario, container, false);
 
 
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+        alertDialog.setTitle(Html.fromHtml("<font color='#BC6C25'>Sentiero inserito con successo</font>"));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        WaypointsController.insertWaypoints(getActivity(),lat1,lng1,lat2,lng2);
+                        DifficultyController.insertDifficulty(getActivity(), (Integer) time_spinner.getSelectedItem());
+                        DurationController.insertDuration(getActivity(),time.getText().toString(),min);
+                        Navigation.findNavController(v).navigate(R.id.action_inserimentoItinerario_to_navigation_home);
+                    }
+                });
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.green));
+            }
+        });
 
 
         handlePathOz = new HandlePathOz(getActivity(),this);
@@ -163,9 +185,11 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 timePickerDialog = new TimePickerDialog(getActivity(), R.style.TimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minutes) {
+
 
                         time.setText(String.format("%02d:%02d",hour,minutes));
                         min=hour*60+minutes;
@@ -210,23 +234,19 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
 
 
 
-                if((title.getText().toString().isEmpty() || description.getText().toString().isEmpty() || time.getText().toString().isEmpty() || time_spinner.getSelectedItem().toString()
+                if((title.getText().toString().isEmpty() || min<1 || description.getText().toString().isEmpty() || time.getText().toString().isEmpty() || time_spinner.getSelectedItem().toString()
                 ==null || startPoint.getText().toString().isEmpty()) || (lat1 == 0 || lat2 == 0 || lng1 == 0 || lng2 == 0)){
                     Toast.makeText(getActivity(),"Inserire tutti i campi/Sentiero non valido",Toast.LENGTH_SHORT).show();
-                }else{
+                }else
+                {
 
                     PostController.InsertPost(getActivity(), title.getText().toString(), description.getText().toString(), startPoint.getText().toString());
-
-
-
-                    Dialog dialog = new Dialog();
-
-
-
-                    dialog.showMessageDialog(getActivity(),"Sentiero inserito correttamente",null);
-                    WaypointsController.insertWaypoints(getActivity(),lat1,lng1,lat2,lng2);
+                  /*  WaypointsController.insertWaypoints(getActivity(),lat1,lng1,lat2,lng2);
                     DifficultyController.insertDifficulty(getActivity(), (Integer) time_spinner.getSelectedItem());
-                    DurationController.insertDuration(getActivity(),time.getText().toString(),min);
+                    DurationController.insertDuration(getActivity(),time.getText().toString(),min);*/
+
+
+                    alertDialog.show();
 
                 }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
 import java.util.Date;
+import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
 public class NewReportFragment extends Fragment {
 
@@ -47,7 +49,7 @@ public class NewReportFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_new_report, container, false);
+        View v = inflater.inflate(R.layout.fragment_new_report, container, false);
 
         Bundle bundle = this.getArguments();
         String title = bundle.getString("TitoloSentiero");
@@ -57,22 +59,27 @@ public class NewReportFragment extends Fragment {
 
 
 
-        pathName = view.findViewById(R.id.pathNameReport_textView);
+
+        pathName = v.findViewById(R.id.pathNameReport_textView);
         pathName.setText(title);
 
-        titleEd = view.findViewById(R.id.reportTitle_EditText);
-        descriptionEd = view.findViewById(R.id.reportDescription_EditText);
+        titleEd = v.findViewById(R.id.reportTitle_EditText);
+        descriptionEd = v.findViewById(R.id.reportDescription_EditText);
 
-        newReportBtn = view.findViewById(R.id.publishReport_Button);
+        newReportBtn = v.findViewById(R.id.publishReport_Button);
         newReportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReportController.InsertReport(getActivity(),titleEd.getText().toString(),descriptionEd.getText().toString(),id,postUser);
+                if(titleEd.getText().toString().isEmpty() || descriptionEd.getText().toString().isEmpty()){
+                    showMessageDialog(getActivity(),"Inserire tutti i campi",null);
+                }else {
+                    ReportController.InsertReport(getActivity(), titleEd.getText().toString(), descriptionEd.getText().toString(), id, postUser, v);
+                }
             }
         });
 
 
 
-        return view;
+        return v;
     }
 }

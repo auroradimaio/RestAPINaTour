@@ -68,7 +68,7 @@ public class insertReviewFragment extends Fragment {
                     showMessageDialog(getActivity(),"Inserire una recensione valida",null);
                 }else {
 
-                    ReviewController.insertReview(getActivity(), commentEditText.getText().toString(), ratingBar.getRating(), id);
+                    ReviewController.insertReview(getActivity(), commentEditText.getText().toString(), ratingBar.getRating(), id,v);
 
                 }
             }

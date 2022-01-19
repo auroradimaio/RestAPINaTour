@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -357,7 +358,6 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void applyChanges(int difficulty, String duration,int minutes) {
-        Toast.makeText(getActivity(),"diff"+difficulty+minutes+id,Toast.LENGTH_SHORT).show();
         if(difficulty==0 && duration.isEmpty()){
             showMessageDialog(getActivity(),"Inserire campi validi",null );
         }else if(difficulty!=0 && duration.isEmpty()){
