@@ -68,6 +68,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.natour21.Dialog.Dialog.showMessageDialog;
+
 
 public class inserimentoItinerario extends Fragment implements OnMapReadyCallback, RoutingListener, HandlePathOzListener.SingleUri {
 
@@ -124,28 +126,6 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_inserimento_itinerario, container, false);
-
-
-        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-        alertDialog.setTitle(Html.fromHtml("<font color='#BC6C25'>Sentiero inserito con successo</font>"));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        WaypointsController.insertWaypoints(getActivity(),lat1,lng1,lat2,lng2);
-                        DifficultyController.insertDifficulty(getActivity(), (Integer) time_spinner.getSelectedItem());
-                        DurationController.insertDuration(getActivity(),time.getText().toString(),min);
-                        Navigation.findNavController(v).navigate(R.id.action_inserimentoItinerario_to_navigation_home);
-                    }
-                });
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.green));
-            }
-        });
-
 
         handlePathOz = new HandlePathOz(getActivity(),this);
 
@@ -236,18 +216,12 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
 
                 if((title.getText().toString().isEmpty() || min<1 || description.getText().toString().isEmpty() || time.getText().toString().isEmpty() || time_spinner.getSelectedItem().toString()
                 ==null || startPoint.getText().toString().isEmpty()) || (lat1 == 0 || lat2 == 0 || lng1 == 0 || lng2 == 0)){
-                    Toast.makeText(getActivity(),"Inserire tutti i campi/Sentiero non valido",Toast.LENGTH_SHORT).show();
+                    showMessageDialog(getActivity(),"Inserire tutti i campi/Sentiero non valido",null);
                 }else
                 {
 
-                    PostController.InsertPost(getActivity(), title.getText().toString(), description.getText().toString(), startPoint.getText().toString());
-                  /*  WaypointsController.insertWaypoints(getActivity(),lat1,lng1,lat2,lng2);
-                    DifficultyController.insertDifficulty(getActivity(), (Integer) time_spinner.getSelectedItem());
-                    DurationController.insertDuration(getActivity(),time.getText().toString(),min);*/
-
-
-                    alertDialog.show();
-
+                    PostController.InsertPost(getActivity(), title.getText().toString(), description.getText().toString(), startPoint.getText().toString(), lat1, lng1
+                    ,lat2,lng2,time.getText().toString(),min,(Integer) time_spinner.getSelectedItem());
                 }
 
                 }

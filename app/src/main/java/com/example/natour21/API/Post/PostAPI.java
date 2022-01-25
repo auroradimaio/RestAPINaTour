@@ -122,7 +122,9 @@ public class PostAPI {
 
 
 
-    public static void InsertPost(Activity activity, String title, String description, String startpoint, String username,String accessToken, VolleyCallback volleyCallback){
+    public static void InsertPost(Activity activity, String title, String description, String startpoint,
+                                  double lat1, double lng1, double lat2, double lng2, String duration,  Integer minutes,
+                                  Integer difficulty, String username,String accessToken, VolleyCallback volleyCallback){
 
         String url = Config.BASE_URL+Config.API+Config.INSERTPOST;
         JSONObject jsonBody = new JSONObject();
@@ -130,6 +132,13 @@ public class PostAPI {
             jsonBody.put("description",description);
             jsonBody.put("title",title);
             jsonBody.put("startpoint",startpoint);
+            jsonBody.put("lat1", lat1);
+            jsonBody.put("lng1", lng1);
+            jsonBody.put("lat2", lat2);
+            jsonBody.put("lng2", lng2);
+            jsonBody.put("duration", duration);
+            jsonBody.put("minutes",minutes);
+            jsonBody.put("difficulty", difficulty);
             jsonBody.put("username",username);
 
         }catch (JSONException jsonException){

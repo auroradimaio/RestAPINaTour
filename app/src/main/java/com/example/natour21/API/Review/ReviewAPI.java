@@ -69,7 +69,12 @@ public class  ReviewAPI {
                     }
 
                     ratingBar.setRating(totalvalue/i);
-                    textView.setText(String.format("%.1f",totalvalue/i));
+                    if(!String.format("%.1f",totalvalue/i).equals("NaN")) {
+                        textView.setText(String.format("%.1f", totalvalue / i));
+                    }else
+                    {
+                        textView.setText("");
+                    }
 
 
                     mp[0] = new ReviewAdapter(activity, mReviewList);

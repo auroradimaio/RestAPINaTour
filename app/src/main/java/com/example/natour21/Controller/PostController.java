@@ -2,8 +2,10 @@ package com.example.natour21.Controller;
 
 import android.app.Activity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -12,6 +14,7 @@ import com.example.natour21.Adapter.PostAdapter;
 import com.example.natour21.Fragment.HomeFragment;
 import com.example.natour21.Item.ChatRoom;
 import com.example.natour21.Item.PostItem;
+import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
 
 import org.json.JSONArray;
@@ -35,15 +38,19 @@ public class PostController {
 
 
 
-    public static void InsertPost(Activity activity, String title, String description, String startpoint){
+    public static void InsertPost(Activity activity, String title, String description, String startpoint,
+                                    double lat1, double lng1, double lat2, double lng2,
+                                  String duration, Integer minutes, Integer difficulty){
 
-        PostAPI.InsertPost(activity, title, description, startpoint, AuthenticationController.user_username, AuthenticationController.accessToken, new VolleyCallback() {
+        PostAPI.InsertPost(activity, title, description, startpoint,
+                lat1,lng1,lat2,lng2,duration,minutes,difficulty, AuthenticationController.user_username, AuthenticationController.accessToken, new VolleyCallback() {
             @Override
             public void onSuccess(String response) {
                 try{
                     JSONObject jsonObject = new JSONObject(response);
-                    if(jsonObject.getString("status").equals("OK")){
-
+                    if(jsonObject.getString("status").equals("OK"))
+                    {
+                        showMessageDialog(activity, "Post inserito con successo", null);
                     }else if(jsonObject.getString("status").equals("FAILED")){
                         showMessageDialog(activity,"Non è stato possibile inserire il post",null);
                     }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))

@@ -362,18 +362,15 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
             showMessageDialog(getActivity(),"Inserire campi validi",null );
         }else if(difficulty!=0 && duration.isEmpty()){
             DifficultyController.insertDifficulties(getActivity(),difficulty,id);
-            showMessageDialog(getActivity(),"Cambiamenti effettuati con successo",null);
             postDialog.dismiss();
             onResume();
         }else if(difficulty==0 && !duration.isEmpty()){
             DurationController.insertDurations(getActivity(),duration,minutes,id);
-            showMessageDialog(getActivity(),"Cambiamenti effettuati con successo",null);
             postDialog.dismiss();
             onResume();
         }else if(difficulty!=0 && !duration.isEmpty()){
             DurationController.insertDurations(getActivity(),duration,minutes,id);
             DifficultyController.insertDifficulties(getActivity(),difficulty,id);
-            showMessageDialog(getActivity(),"Cambiamenti effettuati con successo",null);
             postDialog.dismiss();
             onResume();
 
