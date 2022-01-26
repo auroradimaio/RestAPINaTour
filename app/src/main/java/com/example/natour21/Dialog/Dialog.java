@@ -37,8 +37,6 @@ public class Dialog {
             });
         }else {
             okButton.setOnClickListener(clickListener);
-
-
         }
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         alertDialog.show();

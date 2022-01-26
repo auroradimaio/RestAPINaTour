@@ -221,7 +221,7 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
                 {
 
                     PostController.InsertPost(getActivity(), title.getText().toString(), description.getText().toString(), startPoint.getText().toString(), lat1, lng1
-                    ,lat2,lng2,time.getText().toString(),min,(Integer) time_spinner.getSelectedItem());
+                    ,lat2,lng2,time.getText().toString(),min,(Integer) time_spinner.getSelectedItem(), view);
                 }
 
                 }

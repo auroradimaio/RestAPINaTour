@@ -40,7 +40,7 @@ public class PostController {
 
     public static void InsertPost(Activity activity, String title, String description, String startpoint,
                                     double lat1, double lng1, double lat2, double lng2,
-                                  String duration, Integer minutes, Integer difficulty){
+                                  String duration, Integer minutes, Integer difficulty, View view_){
 
         PostAPI.InsertPost(activity, title, description, startpoint,
                 lat1,lng1,lat2,lng2,duration,minutes,difficulty, AuthenticationController.user_username, AuthenticationController.accessToken, new VolleyCallback() {
@@ -51,6 +51,7 @@ public class PostController {
                     if(jsonObject.getString("status").equals("OK"))
                     {
                         showMessageDialog(activity, "Post inserito con successo", null);
+                        Navigation.findNavController(view_).navigate(R.id.action_inserimentoItinerario_to_navigation_home);
                     }else if(jsonObject.getString("status").equals("FAILED")){
                         showMessageDialog(activity,"Non è stato possibile inserire il post",null);
                     }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
