@@ -1,15 +1,12 @@
 package com.example.natour21.Fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -18,9 +15,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -41,11 +35,7 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
-import com.example.natour21.Controller.DifficultyController;
-import com.example.natour21.Controller.DurationController;
 import com.example.natour21.Controller.PostController;
-import com.example.natour21.Controller.WaypointsController;
-import com.example.natour21.Dialog.Dialog;
 import com.example.natour21.R;
 import com.example.natour21.Utils.Constants;
 import com.google.android.gms.maps.*;
@@ -64,14 +54,13 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
 
-public class inserimentoItinerario extends Fragment implements OnMapReadyCallback, RoutingListener, HandlePathOzListener.SingleUri {
+public class insertPostFragment extends Fragment implements OnMapReadyCallback, RoutingListener, HandlePathOzListener.SingleUri {
 
 
     private MapView mMapView;
@@ -89,7 +78,7 @@ public class inserimentoItinerario extends Fragment implements OnMapReadyCallbac
 
     Gpx parsedGpx;
     private HandlePathOz handlePathOz;
-    static final String TAG = inserimentoItinerario.class.getSimpleName();
+    static final String TAG = insertPostFragment.class.getSimpleName();
 
     Button btnIns;
     Button btnPubblica;

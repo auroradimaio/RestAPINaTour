@@ -38,7 +38,7 @@
     
     <fragment
             android:id="@+id/inserimentoItinerario"
-            android:name="com.example.natour21.Fragment.inserimentoItinerario"
+            android:name="com.example.natour21.Fragment.insertPostFragment"
             android:label="Inserisci itinerario"
             tools:layout="@layout/fragment_inserimento_itinerario" >
         <action
