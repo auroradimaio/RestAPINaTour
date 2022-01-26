@@ -44,24 +44,8 @@ public class ReviewController {
                 try{
                     JSONObject jsonObject = new JSONObject(response);
                     if(jsonObject.getString("status").equals("OK")){
-                        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-                        alertDialog.setTitle(Html.fromHtml("<font color='#BC6C25'>Recensione inserita con successo</font>"));
-                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                        Navigation.findNavController(view).popBackStack();
-
-                                    }
-                                });
-                        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                            @Override
-                            public void onShow(DialogInterface dialogInterface) {
-                                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.green));
-                            }
-                        });
-                        alertDialog.show();
+                        showMessageDialog(activity, "Recensione inserita con successo", null);
+                        Navigation.findNavController(view).popBackStack();
                     }else if(jsonObject.getString("status").equals("FAILED")){
                         showMessageDialog(activity,"Hai già inserito una recensione per questo post",null);
                     }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
@@ -69,12 +53,13 @@ public class ReviewController {
                         AuthenticationController.logout(activity, true);
                     }
                 }catch (JSONException jsonException){
+                    showMessageDialog(activity,"Non è stato possibile inserire la recensione",null);
                 }
             }
 
             @Override
             public void onError(String response) {
-
+                showMessageDialog(activity,"Non è stato possibile inserire la recensione",null);
             }
         });
 
