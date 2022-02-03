@@ -19,7 +19,6 @@ public class VolleySingleton {
 
     public static synchronized VolleySingleton getInstance(Context ctx)
     {
-
         if(instance == null)
         {
             instance = new VolleySingleton(ctx);
