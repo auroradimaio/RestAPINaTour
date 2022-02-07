@@ -144,6 +144,9 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
         BottomNavigationView navView = getActivity().findViewById(R.id.nav_view);
         navView.setVisibility(navView.VISIBLE);
 
+        ChatController.onChatList = false;
+        ChatController.onSingleChat = false;
+        ReportController.onReportList = false;
         super.onResume();
     }
 

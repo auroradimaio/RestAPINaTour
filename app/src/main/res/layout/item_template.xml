@@ -14,32 +14,34 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+    
             <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView2"
-                android:layout_width="358dp"
-                android:layout_height="211dp"
-
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.333"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_Descrizione"
-                app:liteMode="true" />
-
+                    android:id="@+id/mapView2"
+                    android:layout_width="358dp"
+                    android:layout_height="211dp"
+            
+            
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_Descrizione"
+                    app:liteMode="true"/>
+    
             <TextView
-                android:id="@+id/textView_Descrizione"
-                android:layout_width="346dp"
-                android:layout_height="wrap_content"
-                android:singleLine="false"
-                android:text="Descrizione sentiero Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquet est finibus egestas varius. Donec eget et venenatis tortor"
-                app:layout_constraintBottom_toTopOf="@+id/mapView2"
-                android:textColor="@color/green"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_Titolo" />
+                    android:id="@+id/textView_Descrizione"
+                    android:layout_width="346dp"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:text="Descrizione sentiero Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquet est finibus egestas varius. Donec eget et venenatis tortor"
+                    app:layout_constraintBottom_toTopOf="@+id/mapView2"
+                    android:textColor="@color/green"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_Titolo"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"/>
 
             <TextView
                 android:id="@+id/textView_Titolo"

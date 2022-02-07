@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.natour21.Controller.ChatController;
 import com.example.natour21.R;
 
+import java.util.Locale;
+
 public class SendMessage extends AppCompatActivity {
 
     private EditText username,messageContent;
@@ -25,7 +27,7 @@ public class SendMessage extends AppCompatActivity {
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatController.sendNewMessage(SendMessage.this, username.getText().toString(), messageContent.getText().toString());
+                ChatController.sendNewMessage(SendMessage.this, username.getText().toString().toLowerCase(Locale.ROOT), messageContent.getText().toString());
                 username.setText("");
                 messageContent.setText("");
             }

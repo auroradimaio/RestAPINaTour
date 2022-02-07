@@ -76,13 +76,8 @@ public class ChatController {
 
     public static void updateSingleChat(String from, String content, long time)
     {
-        singleChatActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                singleChat.add(0, new Message(from, content, time));
+        singleChat.add(0, new Message(from, content));
                 SingleChat.updateUI(singleChat);
-            }
-        });
     }
 
     public static void getSingleChat(String email) {
@@ -99,8 +94,7 @@ public class ChatController {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject current = (JSONObject) jsonArray.get(i);
                             singleChat.add(new Message(current.getString("sender"),
-                                    current.getString("content"),
-                                    current.getLong("time")));
+                                    current.getString("content")));
                         }
 
                         SingleChat.updateUI(singleChat);

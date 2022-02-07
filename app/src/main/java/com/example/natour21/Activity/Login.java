@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
@@ -90,7 +91,7 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AuthenticationController.loginNATOUR21(Login.this, username.getText().toString(), password.getText().toString(), rememberMe.isChecked());
+                AuthenticationController.loginNATOUR21(Login.this, username.getText().toString().toLowerCase(Locale.ROOT), password.getText().toString(), rememberMe.isChecked());
             }
         });
 

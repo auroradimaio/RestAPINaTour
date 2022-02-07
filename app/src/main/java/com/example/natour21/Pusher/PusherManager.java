@@ -71,7 +71,7 @@ public class PusherManager {
                                 ChatController.getChatList();
                             } else if (ChatController.onSingleChat) {
                                 if (ChatController.chattingWith.equals(from)) {
-                                    ChatController.updateSingleChat(from, jsonObject.getString("content"), jsonObject.getLong("time"));
+                                    ChatController.getSingleChat(from);
                                 } else {
                                     showToast(activity, "Nuovo messaggio da " + from);
                                 }
