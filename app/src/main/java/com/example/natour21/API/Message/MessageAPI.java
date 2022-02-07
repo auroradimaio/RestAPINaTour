@@ -1,7 +1,6 @@
 package com.example.natour21.API.Message;
 
 import android.app.Activity;
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -49,7 +48,7 @@ public class MessageAPI {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 try {
                     return requestBody == null ? null : requestBody.getBytes("utf-8");
                 } catch (UnsupportedEncodingException uee) {

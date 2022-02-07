@@ -105,7 +105,6 @@
 			android:layout_width="match_parent"
 			android:layout_height="50dp"
 			android:layout_gravity="center_horizontal"
-			android:layout_marginStart="32dp"
 			android:layout_marginEnd="32dp"
 			android:layout_marginBottom="8dp"
 			android:background="@drawable/btn_access_with_facebook"
@@ -114,35 +113,33 @@
 			app:backgroundTint="@null"
 			app:layout_constraintBottom_toTopOf="@+id/btnLoginWithGoogle"
 			app:layout_constraintEnd_toEndOf="@+id/btnRegister"
-			app:layout_constraintStart_toStartOf="@+id/btnLogin" />
-
+			app:layout_constraintStart_toStartOf="@+id/btnLogin"
+			android:layout_marginStart="32dp"/>
+	
 	<Button
-		android:id="@+id/btnLogin"
-		android:layout_width="150dp"
-		android:layout_height="50dp"
-		android:layout_marginEnd="10dp"
-		android:layout_marginBottom="8dp"
-		android:background="@drawable/btn_access"
-		android:text="@string/login"
-		android:textColor="@color/white"
-		app:backgroundTint="@null"
-		app:layout_constraintBottom_toTopOf="@+id/btnLoginWithFacebook"
-		app:layout_constraintEnd_toStartOf="@+id/btnRegister"
-		app:layout_constraintStart_toStartOf="@+id/rememberMe"
-		tools:ignore="TextContrastCheck" />
-
+			android:id="@+id/btnLogin"
+			android:layout_width="150dp"
+			android:layout_height="50dp"
+			android:layout_marginBottom="8dp"
+			android:background="@drawable/btn_access"
+			android:text="@string/login"
+			android:textColor="@color/white"
+			app:backgroundTint="@null"
+			app:layout_constraintBottom_toTopOf="@+id/btnLoginWithFacebook"
+			tools:ignore="TextContrastCheck"
+			app:layout_constraintStart_toStartOf="@+id/et_password"/>
+	
 	<Button
-		android:id="@+id/btnRegister"
-		android:layout_width="150dp"
-		android:layout_height="50dp"
-		android:layout_marginBottom="8dp"
-		android:background="@drawable/btn_access"
-		android:text="@string/register"
-		android:textColor="@color/white"
-		app:backgroundTint="@null"
-		app:layout_constraintBottom_toTopOf="@+id/btnLoginWithFacebook"
-		app:layout_constraintEnd_toEndOf="@+id/et_password"
-		app:layout_constraintStart_toEndOf="@+id/btnLogin"
-		tools:ignore="TextContrastCheck" />
+			android:id="@+id/btnRegister"
+			android:layout_width="150dp"
+			android:layout_height="50dp"
+			android:layout_marginBottom="8dp"
+			android:background="@drawable/btn_access"
+			android:text="@string/register"
+			android:textColor="@color/white"
+			app:backgroundTint="@null"
+			app:layout_constraintBottom_toTopOf="@+id/btnLoginWithFacebook"
+			tools:ignore="TextContrastCheck"
+			app:layout_constraintEnd_toEndOf="@+id/et_password"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

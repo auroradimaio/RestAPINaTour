@@ -6,17 +6,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +37,14 @@ import com.directions.route.RoutingListener;
 import com.example.natour21.Controller.PostController;
 import com.example.natour21.R;
 import com.example.natour21.Utils.Constants;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
+import com.google.android.libraries.places.api.Places;
+
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import io.ticofab.androidgpxparser.parser.GPXParser;
@@ -56,6 +60,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.natour21.Dialog.Dialog.showMessageDialog;
@@ -76,6 +81,8 @@ public class insertPostFragment extends Fragment implements OnMapReadyCallback, 
     MarkerOptions place2;
     GoogleMap map;
     GPXParser parser = new GPXParser();
+
+
 
     Gpx parsedGpx;
     private HandlePathOz handlePathOz;
@@ -119,6 +126,10 @@ public class insertPostFragment extends Fragment implements OnMapReadyCallback, 
 
         handlePathOz = new HandlePathOz(getActivity(),this);
 
+
+            Places.initialize(getActivity(), "AIzaSyDVQ-0d9dN0BtMw0J4X45DeKwAJYKItnQE");
+
+
         ActivityResultLauncher<Intent> activityFilePicker = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -145,6 +156,42 @@ public class insertPostFragment extends Fragment implements OnMapReadyCallback, 
         title= v.findViewById(R.id.title_editText);
         description = v.findViewById(R.id.description_editText);
         startPoint = v.findViewById(R.id.startPoint_editText);
+
+
+
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
+
+
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID,
+                Place.Field.NAME,Place.Field.LAT_LNG));
+
+
+
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onError(@NonNull Status status) {
+                Log.i(TAG, "An error occurred: " + status);
+
+            }
+
+            @Override
+            public void onPlaceSelected(@NonNull Place place) {
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getLatLng());
+
+
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(place.getLatLng())
+                        .zoom(13)
+                        .build();
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+                map.animateCamera(cameraUpdate);
+
+            }
+        });
+
 
         time_spinner = (Spinner) v.findViewById(R.id.difficulty_spinner);
 
@@ -175,6 +222,7 @@ public class insertPostFragment extends Fragment implements OnMapReadyCallback, 
             }
 
         });
+
 
 
 
@@ -433,6 +481,8 @@ public class insertPostFragment extends Fragment implements OnMapReadyCallback, 
             Toast.makeText(getActivity(), "Sentiero non valido", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 
 
