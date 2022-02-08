@@ -266,7 +266,6 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Dettagli sentiero");
         DifficultyController.getDifficultyById(getActivity(),id,valoreDifficoltà,mRequestQueue);
-
         DurationController.getDurationById(getActivity(),id,valoreDurata,mRequestQueue);
     }
 

@@ -49,7 +49,7 @@ public class ReportController {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         dialogInterface.dismiss();
-                                        Navigation.findNavController(view).navigate(R.id.action_reportFragment_to_navigation_reports);
+                                        Navigation.findNavController(view).popBackStack();
                                     }
                                 });
                         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
