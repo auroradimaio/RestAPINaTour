@@ -44,7 +44,7 @@ public class MessageAPI {
         }){
             @Override
             public String getBodyContentType() {
-                return "application/json; charset=utf-8";
+                return "application/json; charset=UTF-8";
             }
 
             @Override

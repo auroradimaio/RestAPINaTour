@@ -2,6 +2,7 @@ package com.example.natour21.Controller;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import androidx.fragment.app.FragmentActivity;
 import com.example.natour21.API.Message.MessageAPI;
 import com.example.natour21.API.ChatRoom.ChatRoomAPI;
@@ -15,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,19 +41,22 @@ public class ChatController {
             @Override
             public void onSuccess(String response) {
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
+                    JSONObject jsonObject = new JSONObject(new String(response.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                     if(jsonObject.getString("status").equals("OK")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONArray current = (JSONArray) jsonArray.get(i);
-                            chatRoomList.add(new ChatRoom((String) current.get(0),
-                                    (String) current.get(1)));
+                            JSONArray current = jsonArray.getJSONArray(i);
+                            chatRoomList.add(new ChatRoom(current.getString(0),
+                                    current.getString(1)));
                         }
 
                         ChatListFragment.updateUI(chatRoomList);
                     }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
                     {
                         AuthenticationController.logout(chatListActivity, true);
+                    }else if(jsonObject.getString("status").equals("FAILED"))
+                    {
+                        showMessageDialog(chatListActivity,"Impossibile collegarsi alla chat", null);
                     }
 
                 } catch (JSONException jsonException) {
@@ -86,7 +91,7 @@ public class ChatController {
             @Override
             public void onSuccess(String response) {
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
+                    JSONObject jsonObject = new JSONObject(new String(response.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                     if(jsonObject.getString("status").equals("OK")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -121,7 +126,7 @@ public class ChatController {
                 @Override
                 public void onSuccess(String response) {
                     try {
-                        JSONObject jsonObject = new JSONObject(response);
+                        JSONObject jsonObject = new JSONObject(new String(response.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
 
                         if (jsonObject.getString("status").equals("OK")) {
                             updateSingleChat(jsonObject.getJSONObject("result").getString("from"),
