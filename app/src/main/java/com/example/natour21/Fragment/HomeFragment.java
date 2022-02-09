@@ -1,13 +1,11 @@
 package com.example.natour21.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,9 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.*;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.natour21.API.Post.PostAPI;
 import com.example.natour21.Activity.homePage;
 
 
@@ -32,19 +28,11 @@ import com.example.natour21.Controller.ChatController;
 import com.example.natour21.Controller.PostController;
 import com.example.natour21.Controller.ReportController;
 import com.example.natour21.Item.PostItem;
+import com.example.natour21.Item.Report;
 import com.example.natour21.Pusher.PusherManager;
 import com.example.natour21.R;
 
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.example.natour21.Utils.ImagePicker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -57,7 +45,7 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
     public static ArrayList<PostItem> mPostList;
     public static RequestQueue mRequestQueue;
     ImageView userImage;
-
+    public static ArrayList<Report> mReportList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,9 +111,6 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_inserimentoItinerario);
-
-
-
             }
         });
 
@@ -155,7 +140,7 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(getActivity(),"pos="+position,Toast.LENGTH_LONG);
+        //Toast.makeText(getActivity(),"pos="+position,Toast.LENGTH_LONG);
         Fragment fragment = new Fragment();
         Bundle bundle = new Bundle();
         PostItem clickedItem = mPostList.get(position);
@@ -168,6 +153,7 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
         bundle.putDouble("Lon2",clickedItem.getLon2());
         bundle.putInt("Id",clickedItem.getId());
         bundle.putString("User",clickedItem.getUsername());
+
 
         fragment.setArguments(bundle);
 

@@ -16,9 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.example.natour21.API.User.UserAPI;
 import com.example.natour21.Enumeration.Auth;
 import com.example.natour21.Pusher.PusherManager;
-import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
-import com.pusher.client.channel.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 

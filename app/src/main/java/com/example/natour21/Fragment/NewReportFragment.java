@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +17,7 @@ import com.example.natour21.Controller.ReportController;
 import com.example.natour21.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Calendar;
-import java.util.Date;
+
 import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
 public class NewReportFragment extends Fragment {
@@ -27,10 +25,6 @@ public class NewReportFragment extends Fragment {
     TextView pathName;
     Button newReportBtn;
     EditText titleEd, descriptionEd;
-    Date currentTime;
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

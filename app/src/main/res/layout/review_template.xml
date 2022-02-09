@@ -57,17 +57,19 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/userIcon_imageView"
                 app:layout_constraintTop_toBottomOf="@+id/username_TextView" />
-
+    
             <TextView
-                android:id="@+id/reviewDescription_textView"
-                android:layout_width="301dp"
-                android:layout_height="wrap_content"
-                android:singleLine="false"
-                android:text="Descrizione"
-                android:textColor="@color/green"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userIcon_imageView" />
+                    android:id="@+id/reviewDescription_textView"
+                    android:layout_width="301dp"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:text="Descrizione"
+                    android:textColor="@color/green"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/userIcon_imageView"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintHorizontal_bias="0.258"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

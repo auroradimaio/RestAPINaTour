@@ -1,13 +1,9 @@
 package com.example.natour21.Controller;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.text.Html;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.navigation.Navigation;
@@ -17,7 +13,6 @@ import com.android.volley.RequestQueue;
 import com.example.natour21.API.Review.ReviewAPI;
 import com.example.natour21.Adapter.ReviewAdapter;
 import com.example.natour21.Item.ReviewItem;
-import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
 
 import org.json.JSONException;

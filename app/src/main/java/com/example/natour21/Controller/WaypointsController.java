@@ -2,7 +2,6 @@ package com.example.natour21.Controller;
 
 import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.natour21.API.Waypoints.WaypointsAPI;
 import com.example.natour21.Volley.VolleyCallback;

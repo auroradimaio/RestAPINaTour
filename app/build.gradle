@@ -65,6 +65,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01'
+    implementation 'com.github.douglasjunior:android-simple-tooltip:1.0.0-rc.0'
+
+
 
     //Dependency GoogleMaps
     implementation 'com.google.android.gms:play-services-maps:18.0.2'

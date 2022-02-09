@@ -1,16 +1,12 @@
 package com.example.natour21.API.Review;
 
 import android.app.Activity;
-import android.util.Log;
-import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,7 +15,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.natour21.API.Config;
 import com.example.natour21.Adapter.ReviewAdapter;
-import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.Item.ReviewItem;
 import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;

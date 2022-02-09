@@ -1,7 +1,5 @@
 package com.example.natour21.Item;
 
-import com.pusher.client.channel.User;
-
 public class ReviewItem {
     private float Rating;
     private String Description;

@@ -1,9 +1,7 @@
 package com.example.natour21.API.Waypoints;
 
 import android.app.Activity;
-import android.app.VoiceInteractor;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -11,7 +9,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.natour21.API.Config;
 import com.example.natour21.Volley.VolleyCallback;
 import com.example.natour21.Volley.VolleySingleton;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,7 +56,7 @@ public class WaypointsAPI {
             }
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 try {
                     return requestBody == null ? null : requestBody.getBytes("utf-8");
                 } catch (UnsupportedEncodingException uee) {

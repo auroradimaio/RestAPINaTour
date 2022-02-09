@@ -1,13 +1,9 @@
 package com.example.natour21.Controller;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.example.natour21.API.Difficulty.DifficultyAPI;
-import com.example.natour21.Enumeration.Auth;
 import com.example.natour21.Volley.VolleyCallback;
 
 import org.json.JSONException;

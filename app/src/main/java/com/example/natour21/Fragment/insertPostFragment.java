@@ -16,12 +16,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -47,6 +49,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import io.ticofab.androidgpxparser.parser.GPXParser;
 import io.ticofab.androidgpxparser.parser.domain.Gpx;
 import io.ticofab.androidgpxparser.parser.domain.Track;
@@ -90,8 +93,10 @@ public class insertPostFragment extends Fragment implements OnMapReadyCallback, 
 
     Button btnIns;
     Button btnPubblica;
+    Button resetMap;
     EditText title,description,startPoint,time;
     Spinner time_spinner;
+    ImageView info;
 
     TimePickerDialog timePickerDialog;
     int min;
@@ -224,6 +229,23 @@ public class insertPostFragment extends Fragment implements OnMapReadyCallback, 
         });
 
 
+        info = (ImageView)v.findViewById(R.id.info_imageView);
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new SimpleTooltip.Builder(getActivity())
+                        .anchorView(info)
+                        .text("Inserisci punto di inizio e punto di destinazione")
+                        .gravity(Gravity.BOTTOM)
+                        .animated(true)
+                        .padding(20f)
+                        .transparentOverlay(true)
+                        .textColor(getActivity().getResources().getColor(R.color.white))
+                        .build()
+                        .show();
+
+            }
+        });
 
 
 
@@ -269,6 +291,22 @@ public class insertPostFragment extends Fragment implements OnMapReadyCallback, 
                 }
 
 
+        });
+
+        resetMap = (Button)v.findViewById(R.id.ResetMap_button);
+        resetMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                map.clear();
+                lat1=0;
+                lat2=0;
+                lng1=0;
+                lng2=0;
+                i=0;
+                btnIns.setEnabled(true);
+                btnIns.setAlpha(1.0f);
+                trigger="no";
+            }
         });
 
 

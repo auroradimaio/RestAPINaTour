@@ -20,7 +20,6 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
-import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.Item.PostItem;
 import com.example.natour21.R;
 import com.example.natour21.Utils.ImagePicker;

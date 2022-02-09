@@ -10,7 +10,6 @@ import com.example.natour21.Activity.SingleChat;
 import com.example.natour21.Item.ChatRoom;
 import com.example.natour21.Item.Message;
 import com.example.natour21.Fragment.ChatListFragment;
-import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,8 +45,7 @@ public class ChatController {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONArray current = (JSONArray) jsonArray.get(i);
                             chatRoomList.add(new ChatRoom((String) current.get(0),
-                                    (String) current.get(1),
-                                    (Long) current.get(2)));
+                                    (String) current.get(1)));
                         }
 
                         ChatListFragment.updateUI(chatRoomList);
@@ -74,10 +72,10 @@ public class ChatController {
         activity.startActivity(intent);
     }
 
-    public static void updateSingleChat(String from, String content, long time)
+    public static void updateSingleChat(String from, String content)
     {
         singleChat.add(0, new Message(from, content));
-                SingleChat.updateUI(singleChat);
+        SingleChat.updateUI(singleChat);
     }
 
     public static void getSingleChat(String email) {
@@ -93,8 +91,7 @@ public class ChatController {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject current = (JSONObject) jsonArray.get(i);
-                            singleChat.add(new Message(current.getString("sender"),
-                                    current.getString("content")));
+                            singleChat.add(new Message(current.getString("sender"),current.getString("content")));
                         }
 
                         SingleChat.updateUI(singleChat);
@@ -128,8 +125,7 @@ public class ChatController {
 
                         if (jsonObject.getString("status").equals("OK")) {
                             updateSingleChat(jsonObject.getJSONObject("result").getString("from"),
-                                    jsonObject.getJSONObject("result").getString("content"),
-                                    jsonObject.getJSONObject("result").getLong("time"));
+                                    jsonObject.getJSONObject("result").getString("content"));
                         }else if(jsonObject.getString("status").equals("TOKEN_EXPIRED"))
                         {
                             AuthenticationController.logout(chatListActivity, true);

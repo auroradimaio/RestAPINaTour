@@ -7,10 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
-import com.example.natour21.API.Post.PostAPI;
-import com.example.natour21.Controller.PostController;
-import com.example.natour21.Fragment.HomeFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.Controller.ChatController;

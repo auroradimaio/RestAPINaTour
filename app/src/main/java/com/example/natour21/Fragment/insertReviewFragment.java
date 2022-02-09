@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.natour21.Controller.ReviewController;
-import com.example.natour21.Dialog.Dialog;
 import com.example.natour21.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import static com.example.natour21.Dialog.Dialog.showMessageDialog;

@@ -1,9 +1,7 @@
 package com.example.natour21.Controller;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,19 +10,15 @@ import com.android.volley.RequestQueue;
 import com.example.natour21.API.Post.PostAPI;
 import com.example.natour21.Adapter.PostAdapter;
 import com.example.natour21.Fragment.HomeFragment;
-import com.example.natour21.Item.ChatRoom;
 import com.example.natour21.Item.PostItem;
 import com.example.natour21.R;
 import com.example.natour21.Volley.VolleyCallback;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import static com.example.natour21.Dialog.Dialog.showMessageDialog;
 
 public class PostController {

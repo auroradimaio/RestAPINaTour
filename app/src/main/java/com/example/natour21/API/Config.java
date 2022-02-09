@@ -31,4 +31,5 @@ public class Config {
     public static final String GETDURATIONBYID="/duration/id?post_id=";
     public static final String SEND_EMAIL = "/user/sendemail";
     public static final String CHANGE_PASSWORD = "/user/update";
+    public static final String GETREPORTBYPOSTID ="/reports/id?postId=";
 }

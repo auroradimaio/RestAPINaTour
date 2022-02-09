@@ -1,8 +1,6 @@
 package com.example.natour21.API.Post;
 
 import android.app.Activity;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,12 +12,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.natour21.API.Config;
 import com.example.natour21.Adapter.PostAdapter;
-import com.example.natour21.Controller.AuthenticationController;
 import com.example.natour21.Fragment.HomeFragment;
 import com.example.natour21.Item.PostItem;
 import com.example.natour21.Volley.VolleyCallback;
 import com.example.natour21.Volley.VolleySingleton;
-import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
