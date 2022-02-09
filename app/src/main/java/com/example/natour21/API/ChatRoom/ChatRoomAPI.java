@@ -29,6 +29,11 @@ public class ChatRoomAPI {
             }
         }) {
             @Override
+            public String getBodyContentType() {
+                return "application/json; charset=UTF-8";
+            }
+
+            @Override
             public Map<String, String> getParams() {
                 HashMap<String, String> param = new HashMap<>();
                 param.put("username", username);
@@ -39,6 +44,7 @@ public class ChatRoomAPI {
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Authorization", "Bearer " + accessToken);
+                params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
         };
@@ -60,6 +66,13 @@ public class ChatRoomAPI {
                 volleyCallback.onError(error.getMessage());
             }
         }) {
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=UTF-8";
+            }
+
+
             @Override
             public Map<String, String> getParams() {
                 HashMap<String, String> param = new HashMap<>();
@@ -72,6 +85,7 @@ public class ChatRoomAPI {
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Authorization", "Bearer " + accessToken);
+                params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
         };
