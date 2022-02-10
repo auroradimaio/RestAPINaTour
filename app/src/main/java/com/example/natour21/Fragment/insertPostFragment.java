@@ -174,7 +174,6 @@ public class insertPostFragment extends Fragment implements OnMapReadyCallback, 
 
 
 
-        // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onError(@NonNull Status status) {

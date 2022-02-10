@@ -61,4 +61,6 @@ public class ChatListFragment extends Fragment  {
         ChatController.chatListActivity = getActivity();
         ChatController.getChatList();
     }
+
+
 }

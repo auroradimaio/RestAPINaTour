@@ -286,18 +286,20 @@ public class postDetailsFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onResume() {
         super.onResume();
+        Log.i("ONRESUME","On resume active");
         mMapView.onResume();
+        DifficultyController.getDifficultyById(getActivity(),id,valoreDifficoltà,mRequestQueue);
+        DurationController.getDurationById(getActivity(),id,valoreDurata,mRequestQueue);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Dettagli sentiero");
         actionBar.setDisplayHomeAsUpEnabled(false);
-        DifficultyController.getDifficultyById(getActivity(),id,valoreDifficoltà,mRequestQueue);
-        DurationController.getDurationById(getActivity(),id,valoreDurata,mRequestQueue);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mMapView.onStart();
+
     }
 
     @Override

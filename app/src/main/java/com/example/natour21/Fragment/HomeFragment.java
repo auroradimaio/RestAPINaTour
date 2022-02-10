@@ -45,7 +45,6 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
     public static ArrayList<PostItem> mPostList;
     public static RequestQueue mRequestQueue;
     ImageView userImage;
-    public static ArrayList<Report> mReportList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
