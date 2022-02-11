@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +23,7 @@ import java.util.List;
 public class ChatListFragment extends Fragment  {
 
     private static RecyclerView recyclerView;
+
 
     @Nullable
     @Override
@@ -54,6 +56,7 @@ public class ChatListFragment extends Fragment  {
     @Override
     public void onResume() {
         super.onResume();
+
         ChatController.chattingWith = "";
         ChatController.onChatList = true;
         ChatController.onSingleChat = false;
@@ -62,5 +65,9 @@ public class ChatListFragment extends Fragment  {
         ChatController.getChatList();
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+    }
 }

@@ -43,23 +43,8 @@ public class ReportController {
                 try{
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("status").equals("OK")) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-                        alertDialog.setTitle(Html.fromHtml("<font color='#BC6C25'>Segnalazione inserita con successo!</font>"));
-                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                        Navigation.findNavController(view).popBackStack();
-                                    }
-                                });
-                        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                            @Override
-                            public void onShow(DialogInterface dialogInterface) {
-                                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(activity.getResources().getColor(R.color.green));
-                            }
-                        });
-                        alertDialog.show();
+                        showMessageDialog(activity, "Segnalazione inviata con successo!", null);
+                        Navigation.findNavController(view).popBackStack();
                     }
                     else if(jsonObject.getString("status").equals("FAILED")){
                         showMessageDialog(activity,"Hai già segnalato questo post",null);

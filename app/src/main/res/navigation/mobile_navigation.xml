@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.natour21.Fragment.HomeFragment"
-        android:label="HomePage"
+        android:label="NaTour21"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_reports"

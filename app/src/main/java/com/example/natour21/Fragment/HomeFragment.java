@@ -28,7 +28,6 @@ import com.example.natour21.Controller.ChatController;
 import com.example.natour21.Controller.PostController;
 import com.example.natour21.Controller.ReportController;
 import com.example.natour21.Item.PostItem;
-import com.example.natour21.Item.Report;
 import com.example.natour21.Pusher.PusherManager;
 import com.example.natour21.R;
 
@@ -54,12 +53,7 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
 
         super.onCreate(savedInstanceState);
 
-
-
-
-
     }
-
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -102,9 +96,6 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
             }
         });
 
-
-
-
         Button button = (Button)view.findViewById(R.id.btnInsertPath);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,10 +103,6 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
                 Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_inserimentoItinerario);
             }
         });
-
-
-
-
 
         return view;
     }
@@ -139,7 +126,7 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
 
     @Override
     public void onItemClick(int position) {
-        //Toast.makeText(getActivity(),"pos="+position,Toast.LENGTH_LONG);
+
         Fragment fragment = new Fragment();
         Bundle bundle = new Bundle();
         PostItem clickedItem = mPostList.get(position);
@@ -153,9 +140,7 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
         bundle.putInt("Id",clickedItem.getId());
         bundle.putString("User",clickedItem.getUsername());
 
-
         fragment.setArguments(bundle);
-
 
         Navigation.findNavController(mRecyclerView).navigate(R.id.action_navigation_home_to_postDetailsFragment,bundle);
 
@@ -164,7 +149,6 @@ public class HomeFragment extends Fragment implements PostAdapter.OnItemClickLis
 
     @Override
     public void onRefresh() {
-
         PostController.getPosts(getActivity(),HomeFragment.this,mPostList,mPostAdapter,mRecyclerView,mRequestQueue);
         mSwipeRefreshLayout.setRefreshing(false);
     }

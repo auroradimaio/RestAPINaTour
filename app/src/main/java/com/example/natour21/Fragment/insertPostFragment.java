@@ -275,7 +275,7 @@ public class insertPostFragment extends Fragment implements OnMapReadyCallback, 
 
                 if((title.getText().toString().isEmpty() || min<1 ||time.getText().toString().isEmpty() || time_spinner.getSelectedItem().toString()
                 ==null || startPoint.getText().toString().isEmpty())){
-                    showMessageDialog(getActivity(),"Inserire tutti i campi/Sentiero non valido",null);
+                    showMessageDialog(getActivity(),"Inserire tutti i campi richiesti (Nome,Durata,Difficoltà,Punto di inizio) / Sentiero non valido",null);
                 }else if((lat1 == 0 || lat2 == 0 || lng1 == 0 || lng2 == 0)){
 
                     PostController.InsertPost(getActivity(), title.getText().toString(), description.getText().toString(), startPoint.getText().toString(), 0, 0

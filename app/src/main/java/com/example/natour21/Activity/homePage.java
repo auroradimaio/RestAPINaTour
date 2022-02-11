@@ -46,4 +46,11 @@ public class homePage extends AppCompatActivity {
         PusherManager.initChatListner();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.show();
+    }
 }
