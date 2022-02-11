@@ -440,6 +440,9 @@ public class AuthenticationController {
                                 showMessageDialog(activity, "Errore nel recupero delle informazioni", null);
                             }
                         });
+                    }else if(jsonObject.getString("status").equals("FAILED"))
+                    {
+                        showMessageDialog(activity, jsonObject.getString("result"), null);
                     }
                 } catch (JSONException e) {
                     showMessageDialog(activity, "Errore nel recupero delle informazioni", null);
@@ -511,6 +514,9 @@ public class AuthenticationController {
                                         showMessageDialog(activity, "Errore nel recupero delle informazioni", null);
                                     }
                                 });
+                    }else if(jsonObject.getString("status").equals("FAILED"))
+                    {
+                        showMessageDialog(activity, jsonObject.getString("result"), null);
                     }
                 } catch (JSONException e) {
                     showMessageDialog(activity, "Errore nel recupero delle informazioni", null);
