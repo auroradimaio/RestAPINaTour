@@ -8,59 +8,25 @@
     tools:context=".Fragment.HomeFragment"
     android:background="@color/white">
     
-    <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/toolbarChat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        
-        <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/green"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                
-                <TextView
-                        android:id="@+id/chatListAppBarTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_centerVertical="true"
-                        android:text="Chat"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"
-                        android:textStyle="bold"></TextView>
-    
-                <ImageButton
-                        android:id="@+id/btnNewChat"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="10dp"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_new_message"
-                        android:layout_centerInParent="true"></ImageButton>
-            
-            
-            </RelativeLayout>
-        
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatListRecyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarChat" />
+            android:id="@+id/chatListRecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnNewChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_new_message"
+            android:backgroundTint="@color/green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="120dp"
+            android:layout_marginRight="16dp">
+        
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+    
 </androidx.constraintlayout.widget.ConstraintLayout>

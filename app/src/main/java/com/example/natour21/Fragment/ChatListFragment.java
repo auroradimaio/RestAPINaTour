@@ -17,6 +17,7 @@ import com.example.natour21.Controller.ChatController;
 import com.example.natour21.Controller.ReportController;
 import com.example.natour21.Item.ChatRoom;
 import com.example.natour21.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -30,13 +31,11 @@ public class ChatListFragment extends Fragment  {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_list, container, false);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
         recyclerView = view.findViewById(R.id.chatListRecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new ChatListAdapter());
 
-        ImageButton newMessage = view.findViewById(R.id.btnNewChat);
+        FloatingActionButton newMessage = view.findViewById(R.id.btnNewChat);
 
         newMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,9 +64,4 @@ public class ChatListFragment extends Fragment  {
         ChatController.getChatList();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-    }
 }

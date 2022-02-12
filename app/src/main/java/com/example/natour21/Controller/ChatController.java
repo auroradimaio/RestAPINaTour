@@ -71,10 +71,10 @@ public class ChatController {
         });
     }
 
-    public static void openSingleChat(Activity activity, String username){
-        Intent intent = new Intent(activity, SingleChat.class);
+    public static void openSingleChat(String username){
+        Intent intent = new Intent(chatListActivity, SingleChat.class);
         intent.putExtra("username", username);
-        activity.startActivity(intent);
+        chatListActivity.startActivity(intent);
     }
 
     public static void updateSingleChat(String from, String content)

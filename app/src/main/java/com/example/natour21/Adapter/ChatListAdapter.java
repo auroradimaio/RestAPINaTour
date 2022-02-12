@@ -46,7 +46,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
             @Override
             public void onClick(View v) {
                 ChatController.chattingWith = chatRoom.getUsername();
-                ChatController.openSingleChat((Activity) holder.itemView.getContext(), chatRoom.getUsername());
+                ChatController.openSingleChat(chatRoom.getUsername());
             }
         });
 
