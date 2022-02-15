@@ -242,21 +242,20 @@
             app:layout_constraintBottom_toTopOf="@+id/btnInsPath"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
-    
+
     <Button
-            android:id="@+id/ResetMap_button"
-            android:layout_width="105dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="28dp"
-            android:background="@drawable/btn_general"
-            android:text="RESET MAPPA"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.333"
-            app:layout_constraintStart_toEndOf="@+id/place_autocomplete"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"/>
-    
+        android:id="@+id/ResetMap_button"
+        android:layout_width="105dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="272dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_general"
+        android:text="RESET MAPPA"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
     <ImageView
         android:id="@+id/info_imageView"
         android:layout_width="24dp"

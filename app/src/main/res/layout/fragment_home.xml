@@ -12,7 +12,7 @@
         android:id="@+id/imgViewUser"
         android:layout_width="44dp"
         android:layout_height="40dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="35dp"
         android:src="@drawable/user1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,15 +24,15 @@
         android:layout_width="268dp"
         android:layout_height="37dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="45dp"
         android:layout_marginBottom="677dp"
+        android:background="@drawable/btn_homepage"
         android:text="Inserisci un nuovo itinerario..."
         android:textAllCaps="false"
         android:textColor="@color/green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/btn_homepage"
         app:layout_constraintVertical_bias="0.0" />
 
 
